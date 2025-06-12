@@ -178,19 +178,19 @@ class Cost extends StatelessWidget {
                               const SizedBox(height: 10),
                               _buildCostItem(
                                 "Monthly Rent (1 BHK)",
-                                "\$${cost.costOfLiving.monthlyRent}",
+                                "₹${cost.costOfLiving.monthlyRent}",
                               ),
                               _buildCostItem(
                                 "Monthly Utilities",
-                                "\$${cost.costOfLiving.monthlyUtilities}",
+                                "₹${cost.costOfLiving.monthlyUtilities}",
                               ),
                               _buildCostItem(
                                 "Monthly Transport",
-                                "\$${cost.costOfLiving.monthlyTransport}",
+                                "₹${cost.costOfLiving.monthlyTransport}",
                               ),
                               _buildCostItem(
                                 "Monthly Groceries",
-                                "\$${cost.costOfLiving.monthlyGroceries}",
+                                "₹${cost.costOfLiving.monthlyGroceries}",
                               ),
                             ],
                           ),
@@ -300,6 +300,7 @@ class Cost extends StatelessWidget {
                   style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
+
                   ),
                 ),
                 Text(

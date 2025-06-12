@@ -1,5 +1,8 @@
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:my_campus_info/view/SignUpLogin/mobilenoauth.dart';
+import 'package:my_campus_info/view/home_page.dart';
 import 'package:my_campus_info/view/profiles/complete_profile_page.dart';
+import 'package:my_campus_info/view_model/controller.dart';
 import 'package:my_campus_info/view_model/data_loader.dart';
 import 'package:my_campus_info/view_model/profile_controller.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +29,66 @@ class _SignupPageState extends State<SignupPage> {
   bool isPasswordValid(String password) {
     final regex = RegExp(r'^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#\$%^&*])[A-Za-z\d!@#\$%^&*]{8,}$');
     return regex.hasMatch(password);
+  }
+
+  final GoogleSignIn _googleSignIn = GoogleSignIn(
+    scopes: ['email', 'profile'],
+    clientId: "809028962389-buh0m92ilhd1n27vkuhi1og76g9kb5v2.apps.googleusercontent.com", // From GCP OAuth Client
+  );
+
+  Future<void> _handleGoogleLogIn() async {
+    try {
+      final account = await _googleSignIn.signIn();
+      GoogleSignInAuthentication auth = await account!.authentication;
+
+      Map<String, dynamic> map = await AuthService.loginViaGoogle(
+          auth.idToken.toString()
+      );
+
+      if (map["success"]) {
+
+        String token = map['token'];
+
+        await saveToken(token);
+        final controller = Get.put(Controller());
+        controller.isGuestIn.value = false; // user is logged in now
+        controller.isLoggedIn.value = true;
+
+        profile.profile.value = map['student'];
+
+        if(map['firstTime']){
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => CompleteProfilePage()),
+                (route) => false,
+          );
+        }else{
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => HomePage(token)),
+                (route) => false,
+          );
+        }
+
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(map['message']),
+            duration: Duration(seconds: 3),
+            backgroundColor: Colors.black,
+            behavior: SnackBarBehavior.floating,
+          ),
+        );
+      }
+
+    } catch (error) {
+      print("<-------------> Sign-in error: $error");
+    }
+  }
+
+  void printLongText(String text, {int chunkSize = 800}) {
+    final pattern = RegExp('.{1,$chunkSize}'); // Match strings up to chunkSize
+    pattern.allMatches(text).forEach((match) => print(match.group(0)));
   }
 
   Future<bool> _handleSignUp() async {
@@ -292,8 +355,8 @@ class _SignupPageState extends State<SignupPage> {
                   ),
                   elevation: 2,
                 ),
-                onPressed: () async {
-                  // await signIn(); // Calling signIn method properly with async
+                onPressed: () {
+                  _handleGoogleLogIn();
                 },
                 icon: Image.asset(
                   'assets/gmail-logo.jpg',
@@ -351,52 +414,4 @@ class _SignupPageState extends State<SignupPage> {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('auth_token', token);
   }
-
-  // Future signIn() async {
-  //   final user = await GoogleSignInApi.login();
-  //
-  //   if (user == null) {
-  //
-  //     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Signin Failed")));
-  //     print("failed");
-  //   } else {
-  //     // Get the email from the signed-in user
-  //     final String email = user.email;
-  //
-  //     // Send the email to the backend to check if it's already in the database
-  //     final response = await http.post(
-  //       Uri.parse("http://localhost:4000/auth/check-email"),
-  //       headers: {"Content-Type": "application/json"},
-  //       body: jsonEncode({"email": email}),
-  //     );
-  //
-  //     if (response.statusCode == 200) {
-  //       print("Successful");
-  //       final data = jsonDecode(response.body);
-  //
-  //       // Check the backend response to see if the user should be redirected
-  //       if (data['redirect']) {
-  //         // If redirect is true, it means the user does not exist
-  //         print("Redirecting to Dashboard (new user)");
-  //
-  //         // Navigate to the Dashboard page for new user
-  //         Navigator.of(context).pushReplacement(
-  //             MaterialPageRoute(builder: (context) => HomePage()) // Replace with actual Dashboard page
-  //         );
-  //       } else {
-  //         // If redirect is false, it means the user already exists
-  //         print("User already exists, redirecting to another page");
-  //
-  //         // Redirect to a different screen (e.g., Profile or Welcome page for existing users)
-  //         Navigator.of(context).pushReplacement(
-  //             MaterialPageRoute(builder: (context) => HomePage()) // Replace with your desired page
-  //         );
-  //       }
-  //     } else {
-  //       // If the server returns an error
-  //       ScaffoldMessenger.of(context).showSnackBar(
-  //           SnackBar(content: Text("Error checking user"))
-  //       );
-  //     }
-  //  }}
 }
