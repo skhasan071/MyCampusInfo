@@ -112,15 +112,15 @@ class _CollegeDetailState extends State<CollegeDetail> {
     double containerHeight;
 
     if (screenHeight >= 900) {
-      containerHeight = screenHeight * 0.10;
+      containerHeight = screenHeight * 0.15;
     } else if (screenHeight >= 800) {
-      containerHeight = screenHeight * 0.9;
+      containerHeight = screenHeight * 0.14;
     } else if (screenHeight >= 700) {
-      containerHeight = screenHeight * 0.76;
+      containerHeight = screenHeight * 0.81;
     } else if (screenHeight >= 600) {
-      containerHeight = screenHeight * 0.72;
+      containerHeight = screenHeight * 0.77;
     } else {
-      containerHeight = screenHeight * 0.68;
+      containerHeight = screenHeight * 0.73;
     }
 
     return Scaffold(
