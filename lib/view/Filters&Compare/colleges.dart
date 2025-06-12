@@ -40,8 +40,10 @@ class _CollegesState extends State<Colleges> {
   @override
   void initState() {
     super.initState();
-    getColleges();
-    getFavorites();
+    WidgetsBinding.instance.addPostFrameCallback((listener){
+      getColleges();
+      getFavorites();
+    });
   }
 
   @override
@@ -437,6 +439,9 @@ class _CollegesState extends State<Colleges> {
       privates = await StudentService.getPrivateCollegesByInterest(
         profile.profile.value!.id,
       );
+      print(profile.profile.value!.interestedStreams!);
+      print(profile.profile.value!.state!);
+      print(profile.profile.value!.city!);
       countries = await CollegeServices.fetchFilteredColleges(
         streams: profile.profile.value!.interestedStreams!,
         country: "India",
