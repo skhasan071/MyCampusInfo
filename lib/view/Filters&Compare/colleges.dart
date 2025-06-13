@@ -60,17 +60,14 @@ class _CollegesState extends State<Colleges> {
                     ? SingleChildScrollView(
                       child: Padding(
                         padding: EdgeInsets.symmetric(
-                          horizontal: 8,
-                          vertical: 16,
+                          horizontal: 16,
+                          vertical: 4,
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Padding(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 8,
-                                vertical: 6,
-                              ),
+                              padding: const EdgeInsets.only(left: 4.0),
                               child: Text(
                                 "Hello, ${profile.profile.value == null ? "Guest" : profile.profile.value!.name}",
                                 style: TextStyle(

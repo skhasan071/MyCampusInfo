@@ -116,7 +116,7 @@ class _CardStructureState extends State<CardStructure> {
                   );
                 },
         child: Container(
-          width: widget.width ?? 320,
+          width: widget.width ?? 290,
           margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
           decoration: BoxDecoration(
             color: Clr.cardClr,
@@ -285,7 +285,7 @@ class _CardStructureState extends State<CardStructure> {
                           "$courseCount  courses",
                           themes,
                         ),
-                        _buildInfoColumn("Fee Range", widget.feeRange, themes),
+                        _buildInfoColumn("Avg. Fee", widget.feeRange, themes),
                       ],
                     ),
                     const SizedBox(height: 10),
