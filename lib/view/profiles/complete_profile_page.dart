@@ -225,7 +225,7 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text(
-                                "Please enter a 10-digit mobile number",
+                                "Please enter a 12-digit mobile number",
                                 style: TextStyle(color: Colors.white),
                               ),
                               backgroundColor: Colors.black,

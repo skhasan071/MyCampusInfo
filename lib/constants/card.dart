@@ -258,7 +258,7 @@ class _CardStructureState extends State<CardStructure> {
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                         ),
-                        maxLines: 3,
+                        maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
