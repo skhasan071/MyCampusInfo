@@ -46,10 +46,10 @@ class _SelectionPageState extends State<SelectionPage> {
   final Map<String, List<String>> stateCities = {
     'Maharashtra' : ['Mumbai', 'Pune', 'Navi Mumbai', "Nagpur",],
     'Karnataka': ['Mangaluru', "Kalaburagi", 'Bangalore', 'Udupi'],
-    'Delhi': ['Jamia Nagar', 'Dwarka', 'Rohini', 'New Delhi'],
-    'Kerala' : ['Thiruvananthapuram', 'Kochi', 'Kottayam', 'Palakkad'],
-    'Gujarat' : ['Surat', 'Ahmedabad', 'Gandhinagar', 'Anand'],
-    'Tamil Nadu' : ['Chennai', 'Vellore', 'Tiruchirappalli', 'Krishnankoil']
+    'Delhi': ["New Delhi","Tughlakabad",'Firozabad','Lal Kot'],
+    'Kerala' : ['Thiruvananthapuram', 'Kochi', 'Kottayam', 'Palakkad',"Kozhikode",'Kollam','Kollam'],
+    'Gujarat' : ['Surat', 'Ahmedabad', 'Gandhinagar', 'Anand','Vadodara','Morbi'],
+    'Tamil Nadu' : ['Chennai', 'Vellore', 'Tiruchirappalli', 'Krishnankoil','Thanjavur']
   };
 
   // Initially display all states (this will update based on selected country)
@@ -144,7 +144,7 @@ class _SelectionPageState extends State<SelectionPage> {
                   borderRadius: BorderRadius.circular(6),
                 ),
                 child: buildGridSection(
-                  "Search by States",
+                  "Search by States/Union Territories",
                   states,
                   controller.selectedStates,
                   controller.toggleStates,
