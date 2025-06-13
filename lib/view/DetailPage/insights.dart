@@ -11,6 +11,8 @@ class Insights extends StatefulWidget {
 
 class _InsightsState extends State<Insights> {
   String selectedCategory = 'All News';
+  final ScrollController _scrollController = ScrollController();  // Add this line
+
 
   final List<String> categories = [
     'All News',
@@ -145,6 +147,7 @@ class _InsightsState extends State<Insights> {
       return SizedBox(
         height: 40,
         child: ListView.separated(
+          controller: _scrollController,
           scrollDirection: Axis.horizontal,
           itemCount: categories.length,
           separatorBuilder: (context, index) => const SizedBox(width: 10),
@@ -166,6 +169,12 @@ class _InsightsState extends State<Insights> {
                 setState(() {
                   selectedCategory = category;
                 });
+                // Scroll the selected category into view
+                _scrollController.animateTo(
+                  index * 100.0, // Adjust based on item width and spacing
+                  duration: Duration(milliseconds: 300),
+                  curve: Curves.easeInOut,
+                );
               },
             );
           },

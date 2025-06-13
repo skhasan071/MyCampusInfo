@@ -306,8 +306,8 @@ class _PlacementDetailsState extends State<PlacementDetails> {
               return DataRow(
                 cells: [
                   DataCell(Text(branch.branch)),
-                  DataCell(Text(branch.highestPackage)),
-                  DataCell(Text(branch.averagePackage)),
+                  DataCell(Text(branch.highestPackage + 'LPA')),
+                  DataCell(Text(branch.averagePackage + 'LPA')),
                 ],
               );
             }).toList(),
