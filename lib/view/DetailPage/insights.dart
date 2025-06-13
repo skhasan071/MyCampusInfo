@@ -105,18 +105,15 @@ class _InsightsState extends State<Insights> {
       );
     });
   }
-
+  final theme = ThemeController.to.currentTheme;
   Widget _topNewsCard() {
     return Container(
       height: 160,
       width: double.infinity,
+
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
-        gradient: const LinearGradient(
-          colors: [Colors.grey, Colors.white],
-          begin: Alignment.centerLeft,
-          end: Alignment.centerRight,
-        ),
+          gradient: theme.backgroundGradient
       ),
       padding: const EdgeInsets.all(16),
       child: Column(
