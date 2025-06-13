@@ -223,7 +223,18 @@ class _CollegePredictorScreenState extends State<CollegePredictorPage> {
                         ),
                       ),
                     ),
+
                   ),
+                ),
+                const SizedBox(height: 10),  // Space between TextField and disclaimer
+                Text(
+                  "This prediction is based on our available data and may not reflect your actual result.",
+                  style: TextStyle(
+                    fontSize: 10,
+                    color: Color(0xFF757575),
+                    height: 1,  // Add space between lines
+                  ),
+                  textAlign: TextAlign.center,  // Align text to the center
                 ),
               ],
             ),
