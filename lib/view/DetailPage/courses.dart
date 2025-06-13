@@ -107,6 +107,7 @@ class _CoursesState extends State<Courses> with TickerProviderStateMixin {
                 ),
               )
                   : Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
                     decoration: BoxDecoration(
@@ -118,6 +119,8 @@ class _CoursesState extends State<Courses> with TickerProviderStateMixin {
                       ),
                     ),
                     child: TabBar(
+                      tabAlignment: TabAlignment.start,
+                      labelPadding: EdgeInsets.symmetric(horizontal: 5),
                       controller: _tabController,
                       isScrollable: true,
                       labelColor: Colors.white,
@@ -137,7 +140,7 @@ class _CoursesState extends State<Courses> with TickerProviderStateMixin {
                           .map(
                             (title) => Padding(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 2),
+                              horizontal: 4, vertical: 2),
                           child: Tab(
                             child: Text(title),
                           ),

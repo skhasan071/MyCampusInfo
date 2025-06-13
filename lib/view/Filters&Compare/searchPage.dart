@@ -119,6 +119,18 @@ class _SelectionPageState extends State<SelectionPage> {
                                   builder: (context) => SearchRes(clgs),
                                 ),
                               );
+                            }else{
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    "Search field is empty. Please fill it to search",
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                  backgroundColor: Colors.black,
+                                  duration: Duration(seconds: 2),
+                                  behavior: SnackBarBehavior.floating,
+                                ),
+                              );
                             }
 
                           },

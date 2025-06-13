@@ -51,25 +51,6 @@ class DrawerWidget extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SizedBox(height: 10),
-                      TextField(
-                        cursorColor: theme.filterSelectedColor,
-                        decoration: InputDecoration(
-                          hintText: 'Search',
-                          prefixIcon: Icon(Icons.search),
-
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.black),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: theme.filterSelectedColor,
-                              width: 2,
-                            ),
-                          ),
-                        ),
-                      ),
                     ],
                   ),
                 ),
@@ -88,7 +69,7 @@ class DrawerWidget extends StatelessWidget {
                       ),
                       _buildTile(
                         Icons.favorite_border,
-                        'Shortlist/Favorites',
+                        'Shortlist',
                         trailing: _badge(
                           controller.isGuestIn.value
                               ? "Login First"
