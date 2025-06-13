@@ -31,15 +31,9 @@ class _FirstpageState extends State<Firstpage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Text(
-                "Welcome to\nTalentConnect College App",
+                "Welcome to\nMyCampusInfo",
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 12),
-              const Text(
-                "Campus to cubicle",
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 18, color: Colors.black54),
               ),
               const SizedBox(height: 24),
               Container(

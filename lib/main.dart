@@ -1,6 +1,5 @@
 import 'package:my_campus_info/services/shortListCollegeController.dart';
-import 'package:my_campus_info/view/SignUpLogin/FirstPage.dart';
-import 'package:my_campus_info/view/home_page.dart';
+import 'package:my_campus_info/view/splash_view.dart';
 import 'package:my_campus_info/view_model/themeController.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
@@ -56,7 +55,8 @@ class _MyAppState extends State<MyApp> {
             ),
           ),
 
-          home: token == null || token == "" ? Firstpage() : HomePage(token!),
+          home: SplashView(token: token ?? '',),
+
         );
       },
     );
