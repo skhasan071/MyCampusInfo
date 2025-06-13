@@ -282,10 +282,11 @@ class _CompareWithState extends State<CompareWith> {
     colleges = await StudentService.getFavoriteColleges(
       profile.profile.value!.id,
     );
-    colleges.removeWhere((college) => college.id == widget.clg.id);
+
     if (showShortlistedOnly) {
       filteredColleges = List.from(colleges);
     }
+
     setState(() {});
   }
 
@@ -293,9 +294,6 @@ class _CompareWithState extends State<CompareWith> {
     setState(() => isLoading = true);
 
     allColleges = await CollegeServices.getColleges();
-    // ✅ Exclude the selected first college
-    allColleges.removeWhere((college) => college.id == widget.clg.id);
-
     filteredColleges = List.from(allColleges);
 
     setState(() => isLoading = false);
