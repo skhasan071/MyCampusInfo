@@ -54,6 +54,7 @@ class _SelectionPageState extends State<SelectionPage> {
 
   // Initially display all states (this will update based on selected country)
   RxList<String> displayedCities = RxList<String>([]);
+  FocusNode seacrhScope=FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -71,6 +72,7 @@ class _SelectionPageState extends State<SelectionPage> {
                 padding: EdgeInsets.symmetric(vertical: 16),
                 child: TextField(
                   controller: searchCtrl,
+                  focusNode:seacrhScope,
                   cursorColor: theme.filterSelectedColor,
                   decoration: InputDecoration(
                     hintText: "Search here...",
@@ -112,10 +114,11 @@ class _SelectionPageState extends State<SelectionPage> {
                                 states: controller.selectedStates.toList(),
                                 cities: controller.selectedCities.toList(),
                               );
-
+                              seacrhScope.unfocus();
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
+
                                   builder: (context) => SearchRes(clgs),
                                 ),
                               );
