@@ -320,15 +320,6 @@ class _ReviewsState extends State<Reviews> {
                   style: TextStyle(color: Colors.black, fontSize: 16),
                 ),
                 const SizedBox(height: 8),
-                Text(
-                  "Posted on $date",
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 14,
-                  ),
-                ),
-                const SizedBox(height: 8),
               ],
             ),
           ),

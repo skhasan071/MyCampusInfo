@@ -46,14 +46,15 @@ class _SelectionPageState extends State<SelectionPage> {
   final Map<String, List<String>> stateCities = {
     'Maharashtra' : ['Mumbai', 'Pune', 'Navi Mumbai', "Nagpur",],
     'Karnataka': ['Mangaluru', "Kalaburagi", 'Bangalore', 'Udupi'],
-    'Delhi': ["New Delhi","Tughlakabad",'Firozabad','Lal Kot'],
-    'Kerala' : ['Thiruvananthapuram', 'Kochi', 'Kottayam', 'Palakkad',"Kozhikode",'Kollam','Kollam'],
-    'Gujarat' : ['Surat', 'Ahmedabad', 'Gandhinagar', 'Anand','Vadodara','Morbi'],
-    'Tamil Nadu' : ['Chennai', 'Vellore', 'Tiruchirappalli', 'Krishnankoil','Thanjavur']
+    'Delhi': ['Jamia Nagar', 'Dwarka', 'Rohini', 'New Delhi'],
+    'Kerala' : ['Thiruvananthapuram', 'Kochi', 'Kottayam', 'Palakkad'],
+    'Gujarat' : ['Surat', 'Ahmedabad', 'Gandhinagar', 'Anand'],
+    'Tamil Nadu' : ['Chennai', 'Vellore', 'Tiruchirappalli', 'Krishnankoil']
   };
 
   // Initially display all states (this will update based on selected country)
   RxList<String> displayedCities = RxList<String>([]);
+  FocusNode seacrhScope=FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -71,6 +72,7 @@ class _SelectionPageState extends State<SelectionPage> {
                 padding: EdgeInsets.symmetric(vertical: 16),
                 child: TextField(
                   controller: searchCtrl,
+                  focusNode:seacrhScope,
                   cursorColor: theme.filterSelectedColor,
                   decoration: InputDecoration(
                     hintText: "Search here...",
@@ -112,10 +114,11 @@ class _SelectionPageState extends State<SelectionPage> {
                                 states: controller.selectedStates.toList(),
                                 cities: controller.selectedCities.toList(),
                               );
-
+                              seacrhScope.unfocus();
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
+
                                   builder: (context) => SearchRes(clgs),
                                 ),
                               );
@@ -156,7 +159,7 @@ class _SelectionPageState extends State<SelectionPage> {
                   borderRadius: BorderRadius.circular(6),
                 ),
                 child: buildGridSection(
-                  "Search by States/Union Territories",
+                  "Search by States",
                   states,
                   controller.selectedStates,
                   controller.toggleStates,

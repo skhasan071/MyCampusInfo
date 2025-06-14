@@ -30,7 +30,6 @@ class _CollegesState extends State<Colleges> {
   var filter = Get.put(FilterController());
   var loader = Get.put(Loader());
   List<College> colleges = [];
-  List<College> countries = [];
   List<College> states = [];
   List<College> cities = [];
   List<College> rankings = [];
@@ -115,12 +114,7 @@ class _CollegesState extends State<Colleges> {
                               buttonText: "Predict My College",
                               pageNo: 3,
                             ),
-                            countries.isNotEmpty
-                                ? _buildSection(
-                                  "Colleges Based on Country",
-                                  countries,
-                                )
-                                : Container(),
+
                             cities.isNotEmpty
                                 ? _buildSection(
                                   "Colleges Based on City",
@@ -436,13 +430,6 @@ class _CollegesState extends State<Colleges> {
       privates = await StudentService.getPrivateCollegesByInterest(
         profile.profile.value!.id,
       );
-      print(profile.profile.value!.interestedStreams!);
-      print(profile.profile.value!.state!);
-      print(profile.profile.value!.city!);
-      countries = await CollegeServices.fetchFilteredColleges(
-        streams: profile.profile.value!.interestedStreams!,
-        country: "India",
-      );
       states = await CollegeServices.fetchFilteredColleges(
         streams: profile.profile.value!.interestedStreams!,
         state: profile.profile.value!.state,
@@ -452,10 +439,6 @@ class _CollegesState extends State<Colleges> {
         city: profile.profile.value!.city,
       );
     } else {
-      countries = await CollegeServices.fetchFilteredColleges(
-        streams: profile.interestedStreams,
-        country: "India",
-      );
       states = await CollegeServices.fetchFilteredColleges(
         streams: profile.interestedStreams,
         state: "Maharashtra",
