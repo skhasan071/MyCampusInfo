@@ -76,7 +76,7 @@ class AppThemes {
     brochureBtnColor: Colors.green,
     starColor: Colors.amber,
     nirfTextColor: Colors.green,
-    courseCountColor: Colors.deepPurple.shade300,
+    courseCountColor: Color(0xff4B0082),
     filterSelectedColor: Color(0xff4B0082),
     filterTextColor: Colors.white,
     backgroundGradient: const LinearGradient(
@@ -95,7 +95,7 @@ class AppThemes {
     boxGradient: LinearGradient(
       begin: Alignment.topLeft,
       end: Alignment.bottomRight,
-      colors: [Color(0xFFDDEEFF), Color(0xFFB3D1F1)],
+      colors: [Colors.deepPurple.shade50, Colors.deepPurple.shade100],
     ),
     boxShadow: [
       BoxShadow(

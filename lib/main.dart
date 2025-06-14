@@ -12,8 +12,8 @@ Future<void> main() async {
   Get.put(ShortlistedCollegesController());
   WidgetsFlutterBinding.ensureInitialized();
   runApp(
-    //DevicePreview(builder: (context)=>MyApp())
-    MyApp(),
+    DevicePreview(builder: (context)=>MyApp())
+    //MyApp(),
   );
 }
 

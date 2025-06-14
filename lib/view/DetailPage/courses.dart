@@ -61,6 +61,8 @@ class _CoursesState extends State<Courses> with TickerProviderStateMixin {
         .where((category) => categorizedCourses[category]?.isNotEmpty ?? false)
         .toList();
 
+    print(activeTabs.length);
+
     _tabController = TabController(length: activeTabs.length, vsync: this);
 
     setState(() => isLoading = false);
@@ -95,8 +97,9 @@ class _CoursesState extends State<Courses> with TickerProviderStateMixin {
             ),
             backgroundColor: Colors.white,
           ),
+
           body: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               _buildCollegeLogo(),
               const SizedBox(height: 10),
@@ -104,25 +107,16 @@ class _CoursesState extends State<Courses> with TickerProviderStateMixin {
                   ? const Expanded(
                 child: Center(
                   child: CircularProgressIndicator(color: Colors.black),
-                ),
-              )
+                ),)
                   : Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      border: Border(
-                        top: BorderSide(color: Colors.grey, width: 0.4),
-                        bottom:
-                        BorderSide(color: Colors.grey, width: 0.4),
-                      ),
-                    ),
+                  SizedBox(
+                    width: MediaQuery.sizeOf(context).width,
                     child: TabBar(
-                      tabAlignment: TabAlignment.start,
-                      labelPadding: EdgeInsets.symmetric(horizontal: 5),
+                      padding: EdgeInsets.symmetric(horizontal: 4),
                       controller: _tabController,
-                      isScrollable: true,
+                      isScrollable: activeTabs.length > 3,
+                      tabAlignment: activeTabs.length > 3 ? TabAlignment.start : TabAlignment.fill,
                       labelColor: Colors.white,
                       unselectedLabelColor: Colors.black,
                       labelStyle: const TextStyle(
@@ -136,20 +130,16 @@ class _CoursesState extends State<Courses> with TickerProviderStateMixin {
                         color: theme.filterSelectedColor,
                         borderRadius: BorderRadius.circular(6),
                       ),
-                      tabs: activeTabs
-                          .map(
-                            (title) => Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 4, vertical: 2),
-                          child: Tab(
-                            child: Text(title),
-                          ),
-                        ),
-                      )
-                          .toList(),
+                      indicatorSize: TabBarIndicatorSize.tab,
+                      tabs: activeTabs.map((title) => Tab(child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                        child: Text(title),
+                      ),),).toList(),
                     ),
                   ),
+
                   const SizedBox(height: 10),
+
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.55,
                     child: TabBarView(
@@ -157,7 +147,6 @@ class _CoursesState extends State<Courses> with TickerProviderStateMixin {
                       children: activeTabs.map((category) {
                         List<Course> courses =
                             categorizedCourses[category] ?? [];
-
                         return courses.isEmpty
                             ? const Center(
                           child: Text(
