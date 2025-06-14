@@ -98,7 +98,6 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
-  GoogleSignInAccount? _user;
   final GoogleSignIn _googleSignIn = GoogleSignIn(
     scopes: ['email', 'profile'],
     clientId: "809028962389-buh0m92ilhd1n27vkuhi1og76g9kb5v2.apps.googleusercontent.com", // From GCP OAuth Client
@@ -122,10 +121,9 @@ class _LoginPageState extends State<LoginPage> {
         controller.isGuestIn.value = false; // user is logged in now
         controller.isLoggedIn.value = true;
 
+        profileController.profile.value = map['student'];
+
         if(map['firstTime']){
-
-          profileController.profile.value = map['student'];
-
           Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(builder: (context) => CompleteProfilePage()),

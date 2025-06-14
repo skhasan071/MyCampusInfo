@@ -42,41 +42,52 @@ class _EducationPreferenceCardsState extends State<EducationPreferenceCards> {
                   }, icon: Icon(Icons.edit, size: 18),),
                 ],
               ),
-              const SizedBox(height: 12),
+              Divider(),
+              const SizedBox(height: 8),
               const Text(
                 'Education',
                 style: TextStyle(color: Colors.grey),
               ),
+              const SizedBox(height: 8),
               Text(
                 '${pfpController.profile.value!.interestedStreams!.join(", ")}, ${pfpController.profile.value!.preferredCourseLevel ?? ""}, ${pfpController.profile.value!.modeOfStudy ?? ""}',
-                style: TextStyle(fontWeight: FontWeight.bold),
+                style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black.withOpacity(0.75)),
                 softWrap: true, // This ensures wrapping
+                overflow: TextOverflow.ellipsis,
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: 16),
               const Text(
                 'Interested Courses',
                 style: TextStyle(color: Colors.grey),
               ),
+              const SizedBox(height: 8),
               Text(
                 pfpController.profile.value!.coursesInterested!.isEmpty
                     ? "No Courses selected yet"
                     : pfpController.profile.value!.coursesInterested!.join(", "),
-                style: TextStyle(fontWeight: FontWeight.bold),
+                style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black.withOpacity(0.75)),
                 softWrap: true,
               ),
-              SizedBox(height: 12),
+              SizedBox(height: 16),
+              const Text(
+                'Location',
+                style: TextStyle(color: Colors.grey),
+              ),
+              const SizedBox(height: 8),
               Row(
                 children: [
                   Icon(Icons.location_on_outlined, size: 18),
                   SizedBox(width: 4),
-                  Text('${pfpController.profile.value!.state}, ${pfpController.profile.value!.city}'),
+                  Text('${pfpController.profile.value!.state}, ${pfpController.profile.value!.city}', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black.withOpacity(0.75)),),
                   SizedBox(width: 16),
                   Icon(Icons.access_time, size: 18),
                   SizedBox(width: 4),
-                  Text('${pfpController.profile.value!.studyingIn}'),
+                  Text('${pfpController.profile.value!.studyingIn}', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black.withOpacity(0.75)),),
                 ],
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: 8),
+              Divider(),
+              const SizedBox(height: 8),
               GestureDetector(
                 onTap: (){
                   Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => CoursePreferencesPage(isFlow: false)));
@@ -97,35 +108,35 @@ class _EducationPreferenceCardsState extends State<EducationPreferenceCards> {
             ],
           ),
         )),
-
-        SizedBox(height: 10,),
-
-        // Card 2: Current Study Status
-        UiHelper.getCard(width: double.infinity, widget: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
-              Text(
-                'Studying In',
-                style: TextStyle(color: Colors.grey),
-              ),
-              Text(
-                '12th - Passed',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              SizedBox(height: 12),
-              Text(
-                'Passed In',
-                style: TextStyle(color: Colors.grey),
-              ),
-              Text(
-                '2025',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-            ],
-          ),
-        ))
+        //
+        // SizedBox(height: 10,),
+        //
+        // // Card 2: Current Study Status
+        // UiHelper.getCard(width: double.infinity, widget: Padding(
+        //   padding: const EdgeInsets.all(16),
+        //   child: Column(
+        //     crossAxisAlignment: CrossAxisAlignment.start,
+        //     children: const [
+        //       Text(
+        //         'Studying In',
+        //         style: TextStyle(color: Colors.grey),
+        //       ),
+        //       Text(
+        //         '12th - Passed',
+        //         style: TextStyle(fontWeight: FontWeight.bold),
+        //       ),
+        //       SizedBox(height: 12),
+        //       Text(
+        //         'Passed In',
+        //         style: TextStyle(color: Colors.grey),
+        //       ),
+        //       Text(
+        //         '2025',
+        //         style: TextStyle(fontWeight: FontWeight.bold),
+        //       ),
+        //     ],
+        //   ),
+        // ))
       ],
     );
   }

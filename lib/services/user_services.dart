@@ -38,7 +38,6 @@ class StudentService {
           "authorization": "Bearer $token",
         },
       );
-
       if (res.statusCode == 200 || res.statusCode == 201) {
         Map<String, dynamic> data =
             jsonDecode(res.body) as Map<String, dynamic>;
@@ -67,6 +66,7 @@ class StudentService {
 
     var request = http.MultipartRequest('POST', uri);
 
+    print('<-------------------------------->' + token);
     // Set headers
     request.headers['Authorization'] = 'Bearer $token';
     request.headers['Content-Type'] = 'multipart/form-data';
@@ -98,6 +98,7 @@ class StudentService {
         return null;
       }
     } catch (e) {
+      print(e.toString());
       return null;
     }
   }

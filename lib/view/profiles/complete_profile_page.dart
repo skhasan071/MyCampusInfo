@@ -84,7 +84,7 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
     'Haryana': ['Faridabad', 'Gurgaon', 'Panipat', 'Ambala', 'Hisar'],
     'Himachal Pradesh': ['Shimla', 'Manali', 'Dharamshala', 'Solan', 'Mandi'],
     'Jharkhand': ['Ranchi', 'Jamshedpur', 'Dhanbad', 'Bokaro', 'Deoghar'],
-    'Karnataka': ['Bengaluru', 'Mysuru', 'Mangaluru', 'Hubli-Dharwad', 'Belagavi'],
+    'Karnataka': ['Bangalore', 'Mysuru', 'Mangaluru', 'Hubli-Dharwad', 'Belagavi'],
     'Kerala': ['Thiruvananthapuram', 'Kochi', 'Kozhikode', 'Thrissur', 'Alappuzha'],
     'Madhya Pradesh': ['Bhopal', 'Indore', 'Jabalpur', 'Gwalior', 'Ujjain'],
     'Maharashtra': ['Mumbai', 'Pune', 'Nagpur', 'Nashik', 'Aurangabad'],
@@ -225,7 +225,7 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text(
-                                "Please enter a 10-digit mobile number",
+                                "Please enter a 12-digit mobile number",
                                 style: TextStyle(color: Colors.white),
                               ),
                               backgroundColor: Colors.black,

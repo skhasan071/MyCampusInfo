@@ -31,7 +31,6 @@ class ProfilePage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const SizedBox(height: 40),
                 Row(
                   children: [
                     const CircleAvatar(
@@ -44,27 +43,27 @@ class ProfilePage extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            profileController.profile.value!.name!,
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                profileController.profile.value!.name!,
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              IconButton(
+                                icon: const Icon(Icons.edit),
+                                onPressed: () {
+                                  // Navigate to the CompleteProfilePage for editing
+                                  Get.to(
+                                        () => CompleteProfilePage(isEditing: true),
+                                  );
+                                },
+                              ),
+                            ],
                           ),
-                          // Add the Edit button beside the name
-                          Align(
-                            alignment: Alignment.centerRight,
-                            child: IconButton(
-                              icon: const Icon(Icons.edit),
-                              onPressed: () {
-                                // Navigate to the CompleteProfilePage for editing
-                                Get.to(
-                                  () => CompleteProfilePage(isEditing: true),
-                                );
-                              },
-                            ),
-                          ),
-                          const SizedBox(height: 4),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [

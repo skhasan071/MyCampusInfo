@@ -31,17 +31,17 @@ class DrawerWidget extends StatelessWidget {
               children: [
                 // Top Section with Logo, Search, and Avatar
                 Padding(
-                  padding: const EdgeInsets.all(16),
+                  padding: const EdgeInsets.only(top: 16, right: 16, left: 16),
                   child: Column(
                     children: [
                       Row(
                         children: [
                           Text(
-                            'Logo',
+                            'MyCampusInfo',
                             style: TextStyle(
-                              fontSize: 24,
+                              fontSize: 18,
                               fontWeight: FontWeight.bold,
-                              fontFamily: 'Cursive',
+                              fontFamily: 'Poppins',
                             ),
                           ),
                           Spacer(),
@@ -50,25 +50,6 @@ class DrawerWidget extends StatelessWidget {
                             onPressed: () => Navigator.pop(context),
                           ),
                         ],
-                      ),
-                      SizedBox(height: 10),
-                      TextField(
-                        cursorColor: theme.filterSelectedColor,
-                        decoration: InputDecoration(
-                          hintText: 'Search',
-                          prefixIcon: Icon(Icons.search),
-
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.black),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: theme.filterSelectedColor,
-                              width: 2,
-                            ),
-                          ),
-                        ),
                       ),
                     ],
                   ),
@@ -88,7 +69,7 @@ class DrawerWidget extends StatelessWidget {
                       ),
                       _buildTile(
                         Icons.favorite_border,
-                        'Shortlist/Favorites',
+                        'Shortlist',
                         trailing: _badge(
                           controller.isGuestIn.value
                               ? "Login First"
@@ -190,10 +171,29 @@ class DrawerWidget extends StatelessWidget {
                     ],
                   ),
                 ),
+
                 Divider(),
                 // Bottom User Info
                 ListTile(
-                  leading: CircleAvatar(child: Icon(Icons.person)),
+                  leading: Container(
+                    height: 50,
+                    width: 50,
+                    decoration: BoxDecoration(
+                      gradient: theme.backgroundGradient,
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                      border: Border.all(color: Colors.black, width: 2),
+                    ),
+                    child: Center(
+                      child: Text(
+                        controller.isGuestIn.value ? "?" : "P",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w800,
+                          color: Colors.black,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ),
+                  ),
                   title: Text(
                     controller.isGuestIn.value
                         ? 'Please Login'
