@@ -13,7 +13,6 @@ class _InsightsState extends State<Insights> {
   String selectedCategory = 'All News';
   final ScrollController _scrollController = ScrollController();  // Add this line
 
-
   final List<String> categories = [
     'All News',
     'Academic',

@@ -35,6 +35,7 @@ class CustomTheme {
 }
 
 class AppThemes {
+
   static final blackWhiteTheme = CustomTheme(
     brochureBtnColor: Colors.black,
     starColor: Colors.black,
@@ -75,7 +76,7 @@ class AppThemes {
     brochureBtnColor: Colors.green,
     starColor: Colors.amber,
     nirfTextColor: Colors.green,
-    courseCountColor: Colors.blue,
+    courseCountColor: Colors.deepPurple.shade300,
     filterSelectedColor: Color(0xff4B0082),
     filterTextColor: Colors.white,
     backgroundGradient: const LinearGradient(
@@ -222,4 +223,5 @@ class AppThemes {
     ),
     selectedTextBackground: Color(0x881976D2).withOpacity(0.25),
   );
+
 }
