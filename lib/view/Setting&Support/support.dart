@@ -89,7 +89,7 @@ class _SupportPageState extends State<SupportPage> {
             const FAQItem(
               question: "How is the ranking calculated?",
               answer:
-                  "Our rankings consider factors like placement stats, faculty, infrastructure, and student reviews.",
+                  "Our rankings consider factors like placement stats, Nirf, infrastructure, and student reviews.",
             ),
             _buildDivider(),
             _subSectionTitle("Contact Us:"),
