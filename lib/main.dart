@@ -56,7 +56,7 @@ class _MyAppState extends State<MyApp> {
             ),
           ),
 
-          home: SplashView2(token: token ?? '',),
+          home: SplashView(token: token ?? '',),
 
         );
       },
@@ -69,7 +69,6 @@ class _MyAppState extends State<MyApp> {
   }
 }
 
-
 // Function to get the token
 Future<String?> getToken() async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -80,68 +79,4 @@ Future<String?> getToken() async {
 Future<void> delToken(String token) async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   await prefs.setString('auth_token', token);
-}
-
-class GoogleSignInPage extends StatefulWidget {
-  @override
-  State<GoogleSignInPage> createState() => _GoogleSignInPageState();
-}
-
-class _GoogleSignInPageState extends State<GoogleSignInPage> {
-
-  GoogleSignInAccount? _user;
-  final GoogleSignIn _googleSignIn = GoogleSignIn(
-    scopes: ['email', 'profile'],
-    clientId: "809028962389-buh0m92ilhd1n27vkuhi1og76g9kb5v2.apps.googleusercontent.com", // From GCP OAuth Client
-  );
-
-  Future<void> _handleSignIn() async {
-    try {
-      final account = await _googleSignIn.signIn();
-      GoogleSignInAuthentication auth = await account!.authentication;
-      print('Token Id: ' + auth.idToken.toString() + ' ---->');
-      setState(() {
-        _user = account;
-      });
-    } catch (error) {
-      print("<-------------> Sign-in error: $error");
-    }
-  }
-
-  Future<void> _handleSignOut() async {
-    await _googleSignIn.signOut();
-    setState(() {
-      _user = null;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text("GCP Google Sign-In")),
-      body: Center(
-        child: _user == null
-            ? ElevatedButton(
-          onPressed: _handleSignIn,
-          child: Text("Sign In with Google"),
-        )
-            : Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            CircleAvatar(
-              backgroundImage: NetworkImage(_user!.photoUrl ?? ""),
-              radius: 40,
-            ),
-            SizedBox(height: 10),
-            Text("Welcome, ${_user!.displayName}"),
-            SizedBox(height: 10),
-            ElevatedButton(
-              onPressed: _handleSignOut,
-              child: Text("Sign Out"),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 }

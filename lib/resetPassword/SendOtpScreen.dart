@@ -43,7 +43,7 @@ class _SendOtpPageState extends State<SendOtpScreen> {
   void _showSnackbar(String message, Color color) {
     ScaffoldMessenger.of(
       context,
-    ).showSnackBar(SnackBar(content: Text(message), backgroundColor: color));
+    ).showSnackBar(SnackBar(content: Text(message), backgroundColor: color, behavior: SnackBarBehavior.floating, duration: Duration(seconds: 3),));
   }
 
   @override

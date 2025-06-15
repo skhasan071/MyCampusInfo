@@ -41,6 +41,7 @@ class _LoginPageState extends State<LoginPage> {
   Future<void> _handleLogin() async {
     String email = emailController.text.trim();
     String password = passwordController.text.trim();
+    final passwordRegex = RegExp(r'^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$');
     final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
 
     if(!emailRegex.hasMatch(email)){
@@ -55,7 +56,19 @@ class _LoginPageState extends State<LoginPage> {
       );
       loader.isLoading(false);
 
-    } else if (email.isNotEmpty && password.isNotEmpty) {
+    } else if(!passwordRegex.hasMatch(password)){
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Password must be at least 8 characters long,and a mixture of uppercase,lowercase,numeric and special characters"),
+          duration: Duration(seconds: 3),
+          backgroundColor: Colors.black,
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
+      loader.isLoading(false);
+
+    }else if (email.isNotEmpty && password.isNotEmpty) {
       loader.isLoading(true);
       Map<String, dynamic> map = await AuthService.loginStudent(
         email,
@@ -69,6 +82,7 @@ class _LoginPageState extends State<LoginPage> {
         final controller = Get.put(Controller());
         controller.isGuestIn.value = false; // user is logged in now
         controller.isLoggedIn.value = true;
+        profileController.profile.value = map['student'];
         Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(builder: (context) => HomePage(token)),
@@ -157,7 +171,6 @@ class _LoginPageState extends State<LoginPage> {
     final pattern = RegExp('.{1,$chunkSize}'); // Match strings up to chunkSize
     pattern.allMatches(text).forEach((match) => print(match.group(0)));
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -291,39 +304,38 @@ class _LoginPageState extends State<LoginPage> {
                       ),
             ),
             const SizedBox(height: 20),
-
-            SizedBox(
-              width: double.infinity,
-              height: 50,
-              child: ElevatedButton.icon(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(2),
-                    side: const BorderSide(color: Colors.black),
-                  ),
-                  elevation: 2,
-                ),
-                onPressed: () async {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => Mobilenoauth()),
-                  );
-                },
-                icon: Icon(Icons.phone, color: Colors.black, size: 24,),
-
-                label: Flexible(
-                  child: Text(
-                    "Login with Mobile Number",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(height: 10),
+            // SizedBox(
+            //   width: double.infinity,
+            //   height: 50,
+            //   child: ElevatedButton.icon(
+            //     style: ElevatedButton.styleFrom(
+            //       backgroundColor: Colors.white,
+            //       shape: RoundedRectangleBorder(
+            //         borderRadius: BorderRadius.circular(2),
+            //         side: const BorderSide(color: Colors.black),
+            //       ),
+            //       elevation: 2,
+            //     ),
+            //     onPressed: () async {
+            //       Navigator.push(
+            //         context,
+            //         MaterialPageRoute(builder: (context) => Mobilenoauth()),
+            //       );
+            //     },
+            //     icon: Icon(Icons.phone, color: Colors.black, size: 24,),
+            //
+            //     label: Flexible(
+            //       child: Text(
+            //         "Login with Mobile Number",
+            //         style: TextStyle(
+            //           color: Colors.black,
+            //           fontWeight: FontWeight.bold,
+            //         ),
+            //       ),
+            //     ),
+            //   ),
+            // ),
+            //SizedBox(height: 10),
             SizedBox(
               width: double.infinity,
               height: 50,
@@ -337,11 +349,7 @@ class _LoginPageState extends State<LoginPage> {
                   elevation: 2,
                 ),
                 onPressed: _handleGoogleLogIn,
-                icon: Image.asset(
-                  'assets/gmail-logo.jpg',
-                  height: 43,
-                  width: 43,
-                ),
+                icon: Icon(Icons.email_outlined, color: Colors.black, size: 28,),
                 label: Flexible(
                   child: Text(
                     "Login with Gmail",

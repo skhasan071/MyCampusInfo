@@ -57,8 +57,7 @@ class ProfilePage extends StatelessWidget {
                                 icon: const Icon(Icons.edit),
                                 onPressed: () {
                                   // Navigate to the CompleteProfilePage for editing
-                                  Get.to(
-                                        () => CompleteProfilePage(isEditing: true),
+                                  Get.to(() => CompleteProfilePage(isEditing: true),
                                   );
                                 },
                               ),
@@ -67,35 +66,29 @@ class ProfilePage extends StatelessWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Icon(Icons.email, size: 16),
-                                  SizedBox(width: 4),
-                                  Text(profileController.profile.value!.email!),
-                                ],
-                              ),
-                              SizedBox(width: 16),
+                              Icon(Icons.email, size: 16),
+                              SizedBox(width: 4),
+                              Expanded(child: Text(profileController.profile.value!.email!, style: TextStyle(overflow: TextOverflow.ellipsis),)),
+                              SizedBox(width: 16,),
                             ],
                           ),
-                          Row(
+                          profileController.profile.value!.mobileNumber != null ? Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Icon(Icons.phone, size: 16),
                               SizedBox(width: 4),
                               Text(
-                                profileController.profile.value!.mobileNumber
-                                    .toString(),
+                                profileController.profile.value!.mobileNumber.toString(),
                               ),
                             ],
-                          ),
-                          Row(
+                          ) : SizedBox.shrink(),
+                          profileController.profile.value!.mobileNumber != null ? Row(
                             children: [
                               Icon(Icons.location_on, size: 16),
                               SizedBox(width: 4),
-                              Text(profileController.profile.value!.city ?? ""),
+                              Text(profileController.profile.value!.city.toString()),
                             ],
-                          ),
+                          ) : SizedBox.shrink(),
                         ],
                       ),
                     ),

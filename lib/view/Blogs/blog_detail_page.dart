@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:my_campus_info/view_model/themeController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
@@ -34,9 +35,7 @@ class BlogPageDetail extends StatelessWidget {
               children: [
                 // "All Posts" link
                 OutlinedButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
+                  onPressed: null,
                   style: OutlinedButton.styleFrom(
                     backgroundColor: theme.filterSelectedColor,
                     side: BorderSide(color: theme.filterSelectedColor),
@@ -45,7 +44,7 @@ class BlogPageDetail extends StatelessWidget {
                     ),
                   ),
                   child: Text(
-                    'All Posts',
+                    blog['category'],
                     style: TextStyle(
                       fontSize: 16,
                       color: theme.filterTextColor,
@@ -55,24 +54,6 @@ class BlogPageDetail extends StatelessWidget {
 
                 SizedBox(height: 8),
 
-                // Category and reading time
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      blog['category'] ??
-                          'Category', // Use a default value if category is null
-                      style: TextStyle(fontSize: 16, color: Colors.grey),
-                    ),
-                    Text(
-                      blog['readingTime'] ??
-                          '5 min read', // Default reading time
-                      style: TextStyle(fontSize: 16, color: Colors.grey),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 8),
-
                 // Blog title and publish date
                 Text(
                   blog['title'] ?? 'Blog title heading will go here',
@@ -80,23 +61,20 @@ class BlogPageDetail extends StatelessWidget {
                 ),
                 SizedBox(height: 8),
                 Text(
-                  'Published on ${blog['publishedDate'] ?? 'N/A'}',
+                  'Published on ${DateFormat('dd-MM-yyyy').format(DateTime.parse(blog['publishedDate'].toString()).toLocal()) ?? 'N/A'}',
                   style: TextStyle(fontSize: 14, color: Colors.grey),
                 ),
+
                 SizedBox(height: 16),
 
                 // Blog Image Section
-                Container(
+                blog['image'] != '--'
+                 ? Container(
                   color: Colors.grey[300],
                   height: 200,
-                  child:
-                      blog['image'] != null
-                          ? Image.asset(blog['image']) // Load image from assets
-                          : Image.asset(
-                            'assets/default-image.jpg',
-                          ), // Default image if none
-                ),
-                SizedBox(height: 16),
+                  child: Image.network(blog['image'], fit: BoxFit.cover,),
+                ) : SizedBox.shrink() ,
+                SizedBox(height: blog['image'] == '--' ? 0 : 16),
 
                 // Content Sections
                 for (var section in blog['content'])
@@ -105,7 +83,7 @@ class BlogPageDetail extends StatelessWidget {
                 SizedBox(height: 20),
 
                 // Contributors Section
-                if (blog['contributors'] != null) ...[
+                if (blog['contributors'].isNotEmpty) ...[
                   Text(
                     'Contributors',
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
@@ -121,9 +99,6 @@ class BlogPageDetail extends StatelessWidget {
                     ],
                   ),
                 ],
-
-                // Static Subscribe Section
-                SizedBox(height: 20),
               ],
             ),
           ),
@@ -154,10 +129,19 @@ class BlogPageDetail extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 8.0),
       child: Row(
         children: [
-          CircleAvatar(
-            radius: 20,
-            backgroundColor: theme.selectedTextBackground,
-            child: Icon(Icons.person, color: theme.filterSelectedColor),
+          Container(
+            padding: EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: theme.selectedTextBackground,
+              shape: BoxShape.circle,
+              border: Border.all(color: theme.selectedTextBackground, width: 2),
+            ),
+            child: Center(
+              child: Text(name[0], style: TextStyle(
+                fontSize: 16,
+                color: Colors.black,
+              ),),
+            ),
           ),
           SizedBox(width: 10),
           Column(

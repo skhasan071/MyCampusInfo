@@ -23,6 +23,7 @@ class _EducationPreferenceCardsState extends State<EducationPreferenceCards> {
         UiHelper.getCard(width: double.infinity, widget: Padding(
           padding: const EdgeInsets.all(16),
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
@@ -68,24 +69,24 @@ class _EducationPreferenceCardsState extends State<EducationPreferenceCards> {
                 style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black.withOpacity(0.75)),
                 softWrap: true,
               ),
-              SizedBox(height: 16),
-              const Text(
-                'Location',
+              SizedBox(height: pfpController.profile.value!.state == null  && pfpController.profile.value!.studyingIn == null && pfpController.profile.value!.city == null ? 0 : 16),
+              Text(
+                pfpController.profile.value!.state == null  && pfpController.profile.value!.studyingIn == null && pfpController.profile.value!.city == null ? '' : 'Location',
                 style: TextStyle(color: Colors.grey),
               ),
-              const SizedBox(height: 8),
+              SizedBox(height: pfpController.profile.value!.state == null  && pfpController.profile.value!.studyingIn == null && pfpController.profile.value!.city == null ? 0 : 8),
               Row(
                 children: [
-                  Icon(Icons.location_on_outlined, size: 18),
-                  SizedBox(width: 4),
-                  Text('${pfpController.profile.value!.state}, ${pfpController.profile.value!.city}', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black.withOpacity(0.75)),),
-                  SizedBox(width: 16),
-                  Icon(Icons.access_time, size: 18),
-                  SizedBox(width: 4),
-                  Text('${pfpController.profile.value!.studyingIn}', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black.withOpacity(0.75)),),
+                  pfpController.profile.value!.state == null ? SizedBox.shrink() : Icon(Icons.location_on_outlined, size: 18),
+                  SizedBox(width: pfpController.profile.value!.state == null ? 0 : 4),
+                  Text('${pfpController.profile.value!.state ?? ''} ${pfpController.profile.value!.city ?? ''}', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black.withOpacity(0.75)),),
+                  SizedBox(width: pfpController.profile.value!.state == null ? 0 : 16),
+                  pfpController.profile.value!.studyingIn == null ? SizedBox.shrink() : Icon(Icons.access_time, size: 18),
+                  SizedBox(width: pfpController.profile.value!.state == null ? 0 : 4),
+                  Text(pfpController.profile.value!.studyingIn ?? '', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black.withOpacity(0.75)),),
                 ],
               ),
-              const SizedBox(height: 8),
+              SizedBox(height: pfpController.profile.value!.state == null  && pfpController.profile.value!.studyingIn == null && pfpController.profile.value!.city == null ? 0 : 8),
               Divider(),
               const SizedBox(height: 8),
               GestureDetector(

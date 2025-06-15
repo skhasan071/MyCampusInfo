@@ -64,7 +64,7 @@ class _ShortlistedCollegesPageState extends State<ShortlistedCollegesPage> {
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Clr.primaryBtnClr,
-                      fontSize: 33,
+                      fontSize: 26,
                     ),
                   ),
                   const SizedBox(height: 8),

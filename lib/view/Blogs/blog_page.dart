@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'blog_detail_page.dart'; // Import the detail page
+import 'blog_detail_page.dart';
 
 class BlogPage extends StatefulWidget {
   const BlogPage({super.key});
@@ -95,13 +95,9 @@ class _BlogPageState extends State<BlogPage> {
                                 return BlogCard(
                                   title: blogs[index]['title'],
                                   category: blogs[index]['category'],
-                                  readingTime: blogs[index]['readingTime'],
                                   description: blogs[index]['description'],
-                                  image:
-                                      blogs[index]['image'] ??
-                                      'assets/default-image.jpg', // Use default image if none
-                                  blog:
-                                      blogs[index], // Pass the entire blog to the detail page
+                                  image: blogs[index]['image'] ?? '', // Use default image if none
+                                  blog: blogs[index], // Pass the entire blog to the detail page
                                 );
                               },
                               shrinkWrap: true,
@@ -123,7 +119,6 @@ class _BlogPageState extends State<BlogPage> {
 class BlogCard extends StatelessWidget {
   final String title;
   final String category;
-  final String readingTime;
   final String description;
   final String image;
   final Map<String, dynamic> blog;
@@ -132,9 +127,8 @@ class BlogCard extends StatelessWidget {
     super.key,
     required this.title,
     required this.category,
-    required this.readingTime,
     required this.description,
-    required this.image,
+    this.image = '',
     required this.blog,
   });
 
@@ -154,17 +148,22 @@ class BlogCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Blog image
-              Image.asset(image), // Replace with your image assets or URLs
 
-              SizedBox(height: 16),
+              image == '--' ? SizedBox.shrink() : Container(
+                clipBehavior: Clip.antiAlias,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20)
+                ),
+                child: Image.network(image, width: double.infinity, height: 150, fit: BoxFit.cover,),
+              ), // Replace with your image assets or URLs
+
+              SizedBox(height: image == '--' ? 0 : 16),
 
               // Category and reading time
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(category, style: TextStyle(color: Colors.grey)),
-                  Text(readingTime, style: TextStyle(color: Colors.black)),
                 ],
               ),
 
@@ -178,13 +177,13 @@ class BlogCard extends StatelessWidget {
               SizedBox(height: 8),
 
               // Blog description
-              Text(description, style: TextStyle(color: Colors.grey)),
+              Text(description, style: TextStyle(color: Colors.grey, ), maxLines: 3, overflow: TextOverflow.ellipsis,),
 
               SizedBox(height: 16),
 
               // Read more button
-              TextButton(
-                onPressed: () {
+              GestureDetector(
+                onTap: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -192,15 +191,9 @@ class BlogCard extends StatelessWidget {
                     ),
                   );
                 },
-                style: ButtonStyle(
-                  overlayColor: MaterialStateProperty.all(
-                    Colors.transparent,
-                  ), // removes ripple highlight on press
-                  elevation: MaterialStateProperty.all(0),
-                  shadowColor: MaterialStateProperty.all(Colors.transparent),
-                ),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
                       'Read more',

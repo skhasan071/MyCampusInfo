@@ -37,12 +37,32 @@ class _SplashViewState extends State<SplashView2> {
         backgroundColor: Color(0xff29292A),
         
         body: Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset('assets/MyCampusInfo.png', width: size.width * 0.55, fit: BoxFit.fitWidth,),
-            ],
+          child: Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset('assets/my_campus_info_logo_no_bg.png', width: size.width * 0.5, fit: BoxFit.cover,),
+                SizedBox(height: 6,),
+                Text('MyCampusInfo', style: TextStyle(
+                  fontWeight: FontWeight.w800,
+                  fontSize: 28,
+                  fontFamily: 'Poppins',
+                  color: Color(0xfffef9e8),
+                  letterSpacing: 1.5,
+                ),),
+                SizedBox(height: 4,),
+                SizedBox(
+                  width: size.width * 0.65,
+                  child: Text('College Discovery - Helping Students Make Informed Choices', style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 10,
+                    fontFamily: 'Poppins',
+                    color: Color(0xfffef9e8),
+                  ), textAlign: TextAlign.center,),
+                ),
+              ],
+            ),
           ),
         ),
       

@@ -230,23 +230,13 @@ class _HomePageState extends State<HomePage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    IconButton(
-                      onPressed: () {
+                    GestureDetector(
+                      onTap: () {
                         controller.navSelectedIndex.value = 1;
                       },
-                      icon: Icon(Icons.search, color: Colors.black),
+                      child: Icon(Icons.search, color: Colors.black, size: 28,),
                     ),
-                    IconButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => NotificationPage(),
-                          ),
-                        );
-                      },
-                      icon: Icon(Icons.notifications, color: Colors.black),
-                    ),
+                    SizedBox(width: 12,),
                     GestureDetector(
                       onTap: () {
                         if (controller.isGuestIn.value) {
@@ -422,8 +412,6 @@ class _HomePageState extends State<HomePage> {
 
   Future<void> getUser() async {
     Student? student = await StudentService().getStudent(widget.token);
-    print(profileController.interestedStreams);
-    print(profileController.coursesInterested);
     profileController.profile.value = student;
     profileController.interestedStreams.value = student!.interestedStreams!;
     profileController.coursesInterested.value = student.coursesInterested!;

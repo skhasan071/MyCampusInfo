@@ -33,8 +33,8 @@ class PrivacyPolicyPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 CircleAvatar(
-                  backgroundImage: AssetImage('assets/appLogo.png'),
-                  radius: 55,
+                  backgroundImage: AssetImage('assets/my_campus_info_logo_no_bg.png',),
+                  radius: 35,
                   backgroundColor: Colors.transparent,
                 ),
                 const SizedBox(width: 12),
@@ -82,7 +82,7 @@ class PrivacyPolicyPage extends StatelessWidget {
                   ),
                   _SectionHeader(title: "Account Control"),
                   _SectionText(
-                    "You can request account deletion by contacting us at privacy@collegeapp.com.",
+                    "You can request account deletion by contacting us at privacy@mycampusinfo.com.",
                   ),
                   _SectionHeader(title: "Terms of Use"),
                   _SectionText(
@@ -112,7 +112,7 @@ class PrivacyPolicyPage extends StatelessWidget {
             // Footer text
             const Center(
               child: Text(
-                "© 2025 College Feedback App. All rights reserved.",
+                "© 2025 MyCampusInfo. All rights reserved.",
                 style: TextStyle(
                   fontSize: 13,
                   fontStyle: FontStyle.italic,

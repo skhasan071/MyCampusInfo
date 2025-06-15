@@ -93,7 +93,7 @@ class _SupportPageState extends State<SupportPage> {
             ),
             _buildDivider(),
             _subSectionTitle("Contact Us:"),
-            _infoRichText("Email: ", "contact-us hr@talentconnectss.com."),
+            _infoRichText("Email: ", "contact.mycampusinfo@gmail.com"),
             _infoRichText(
               "Response Time: ",
               "Available 24 hours from Monday to Saturday",
@@ -214,7 +214,7 @@ class _SupportPageState extends State<SupportPage> {
             const SizedBox(height: 30),
             const Center(
               child: Text(
-                "© 2025 College App. All rights reserved.",
+                "© 2025 MyCampusInfo. All rights reserved.",
                 style: TextStyle(
                   fontSize: 13,
                   fontStyle: FontStyle.italic,
@@ -251,12 +251,6 @@ class _SupportPageState extends State<SupportPage> {
           title: "College Predictor",
           description:
               "Use your exam scores and preferences to get personalized suggestions.",
-        ),
-        _featureTile(
-          icon: Icons.feedback,
-          title: "Personal Counseling",
-          description:
-              "Yes, we care about your well-being. Please contact your college counselor or write to us at hr@talentconnectss.com. We’ll connect you with the right help.",
         ),
       ],
     );

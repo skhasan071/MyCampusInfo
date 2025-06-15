@@ -18,8 +18,8 @@ class _SplashViewState extends State<SplashView> {
 
   @override
   void initState() {
-    Timer(Duration(seconds: 5), (){
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SplashView2(token: widget.token)));
+    Timer(Duration(seconds: 3), (){
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => widget.token == '' ? Firstpage() : HomePage(widget.token)));
     });
 
     super.initState();
@@ -37,21 +37,21 @@ class _SplashViewState extends State<SplashView> {
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset('assets/splash-logo.png', width: size.width * 0.45, fit: BoxFit.fitWidth,),
-              SizedBox(height: 28,),
+              Image.asset('assets/my_campus_info_logo_no_bg.png', width: size.width * 0.5, fit: BoxFit.cover,),
+              SizedBox(height: 6,),
               Text('MyCampusInfo', style: TextStyle(
                 fontWeight: FontWeight.w800,
-                fontSize: 30,
+                fontSize: 28,
                 fontFamily: 'Poppins',
                 color: Colors.black,
-                letterSpacing: 2,
+                letterSpacing: 1.5,
               ),),
-              SizedBox(height: 6,),
+              SizedBox(height: 4,),
               SizedBox(
-                width: size.width * 0.6,
+                width: size.width * 0.65,
                 child: Text('College Discovery - Helping Students Make Informed Choices', style: TextStyle(
                   fontWeight: FontWeight.w600,
-                  fontSize: 12,
+                  fontSize: 10,
                   fontFamily: 'Poppins',
                   color: Colors.black,
                 ), textAlign: TextAlign.center,),

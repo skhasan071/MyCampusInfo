@@ -7,9 +7,6 @@ class ContactDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final nameController = TextEditingController();
-    final emailController = TextEditingController();
-    final messageController = TextEditingController();
     final _formKey = GlobalKey<FormState>();
     bool isExpanded = false;
     return Obx(() {
@@ -70,7 +67,7 @@ class ContactDetailsPage extends StatelessWidget {
                             const SizedBox(width: 8),
                             Expanded(
                               child: Text(
-                                'Contact-us@talentsconnectss.com',
+                                'contact.mycampusinfo@gmail.com',
                                 style: TextStyle(
                                   color: theme.filterSelectedColor,
                                   fontSize: 16,
@@ -100,7 +97,7 @@ class ContactDetailsPage extends StatelessWidget {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        'Talent Connect- B BLOCK, first  FLOOR ROOM NO. 1  RUKMINI VENKATASWAMY REDDY ARCADE, ASHOKA LANE, GREEN GLEN LAYOUT, BELLANDUR, BANGALORE KARNATAKA - 560103',
+                                        'Talent Connect - B BLOCK, first  FLOOR ROOM NO. 1  RUKMINI VENKATASWAMY REDDY ARCADE, ASHOKA LANE, GREEN GLEN LAYOUT, BELLANDUR, BANGALORE KARNATAKA - 560103',
                                         style: TextStyle(
                                           color: theme.filterSelectedColor,
                                           fontSize: 16,

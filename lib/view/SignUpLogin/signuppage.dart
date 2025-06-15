@@ -113,7 +113,7 @@ class _SignupPageState extends State<SignupPage> {
     } else if (password.isEmpty || !isPasswordValid(password)) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text("Password must be at least 4 characters long,and a mixture of uppercase,lowercase,numeric and special characters"),
+          content: Text("Password must be at least 8 characters long,and a mixture of uppercase,lowercase,numeric and special characters"),
           duration: Duration(seconds: 3),
           backgroundColor: Colors.black,
           behavior: SnackBarBehavior.floating,
@@ -308,41 +308,40 @@ class _SignupPageState extends State<SignupPage> {
                         child: CircularProgressIndicator(color: Colors.black),
                       ),
             ),
-            const SizedBox(height: 25),
-            SizedBox(
-              width: double.infinity,
-              height: 50,
-              child: ElevatedButton.icon(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(2),
-                    side: const BorderSide(color: Colors.black),
-                  ),
-                  elevation: 2,
-                ),
-                onPressed: () async {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => Mobilenoauth()),
-                  );
-                },
-                icon: Icon(Icons.phone, color: Colors.black, size: 24,),
-                label: Flexible(
-                  child: Text(
-                    'Sign Up with Mobile Number',
-                    overflow: TextOverflow.ellipsis,
-                    softWrap: false,
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ),
-            ),
             const SizedBox(height: 20),
-
+            // SizedBox(
+            //   width: double.infinity,
+            //   height: 50,
+            //   child: ElevatedButton.icon(
+            //     style: ElevatedButton.styleFrom(
+            //       backgroundColor: Colors.white,
+            //       shape: RoundedRectangleBorder(
+            //         borderRadius: BorderRadius.circular(2),
+            //         side: const BorderSide(color: Colors.black),
+            //       ),
+            //       elevation: 2,
+            //     ),
+            //     onPressed: () async {
+            //       Navigator.push(
+            //         context,
+            //         MaterialPageRoute(builder: (context) => Mobilenoauth()),
+            //       );
+            //     },
+            //     icon: Icon(Icons.phone, color: Colors.black, size: 24,),
+            //     label: Flexible(
+            //       child: Text(
+            //         'Sign Up with Mobile Number',
+            //         overflow: TextOverflow.ellipsis,
+            //         softWrap: false,
+            //         style: TextStyle(
+            //           color: Colors.black,
+            //           fontWeight: FontWeight.bold,
+            //         ),
+            //       ),
+            //     ),
+            //   ),
+            // ),
+            // const SizedBox(height: 20),
             SizedBox(
               width: double.infinity,
               height: 50,
@@ -358,11 +357,7 @@ class _SignupPageState extends State<SignupPage> {
                 onPressed: () {
                   _handleGoogleLogIn();
                 },
-                icon: Image.asset(
-                  'assets/gmail-logo.jpg',
-                  height: 43,
-                  width: 43,
-                ),
+                icon: Icon(Icons.email_outlined, color: Colors.black, size: 28,),
                 label: Flexible(
                   child: Text(
                     "Sign Up with Gmail",
