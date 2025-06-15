@@ -18,7 +18,7 @@ class ContactDetailsPage extends StatelessWidget {
         backgroundColor: Colors.white,
         appBar: AppBar(
           title: const Text(
-            'Contact Talent Connect',
+            'Contact our Organization',
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
           backgroundColor: Colors.white,
@@ -137,121 +137,6 @@ class ContactDetailsPage extends StatelessWidget {
                         },
                       ),
                     ],
-                  ),
-
-                  const SizedBox(height: 20),
-                  const Text(
-                    'Send Us a Message:',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 10),
-
-                  // Name Field
-                  TextFormField(
-                    controller: nameController,
-                    cursorColor: theme.filterSelectedColor,
-                    decoration: InputDecoration(
-                      labelText: 'Your Name',
-                      labelStyle: TextStyle(color: Colors.black),
-
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.black),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: theme.filterSelectedColor,
-                          width: 2,
-                        ),
-                      ),
-                    ),
-                    validator:
-                        (value) =>
-                            value == null || value.isEmpty
-                                ? 'Name is required'
-                                : null,
-                  ),
-                  const SizedBox(height: 10),
-
-                  // Email Field
-                  TextFormField(
-                    controller: emailController,
-                    cursorColor: theme.filterSelectedColor,
-                    decoration: InputDecoration(
-                      labelText: 'Your Email',
-                      labelStyle: TextStyle(color: Colors.black),
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.black),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: theme.filterSelectedColor,
-                          width: 2,
-                        ),
-                      ),
-                    ),
-                    validator:
-                        (value) =>
-                            value == null || value.isEmpty
-                                ? 'Email is required'
-                                : null,
-                  ),
-                  const SizedBox(height: 10),
-
-                  // Message Field
-                  TextFormField(
-                    controller: messageController,
-                    maxLines: 4,
-                    cursorColor: theme.filterSelectedColor,
-                    decoration: InputDecoration(
-                      labelText: 'Your Message',
-                      labelStyle: TextStyle(color: Colors.black),
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.black),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: theme.filterSelectedColor,
-                          width: 2,
-                        ),
-                      ),
-                    ),
-                    validator:
-                        (value) =>
-                            value == null || value.isEmpty
-                                ? 'Message is required'
-                                : null,
-                  ),
-                  const SizedBox(height: 20),
-
-                  // Submit Button
-                  SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: theme.filterSelectedColor,
-                        foregroundColor: theme.filterTextColor,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(6),
-                        ),
-                      ),
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text(
-                                'Message sent successfully!',
-                                style: TextStyle(color: theme.filterTextColor),
-                              ),
-                              backgroundColor: theme.filterTextColor,
-                            ),
-                          );
-                          nameController.clear();
-                          emailController.clear();
-                          messageController.clear();
-                        }
-                      },
-                      child: const Text('Send Message'),
-                    ),
                   ),
                 ],
               ),

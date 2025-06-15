@@ -39,7 +39,7 @@ class PrivacyPolicyPage extends StatelessWidget {
                 ),
                 const SizedBox(width: 12),
                 Text(
-                  'College App',
+                  'MyCampusInfo',
                   style: TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.bold,
