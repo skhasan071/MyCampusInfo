@@ -226,9 +226,9 @@ class _CollegePredictorScreenState extends State<CollegePredictorPage> {
 
                   ),
                 ),
-                const SizedBox(height: 10),  // Space between TextField and disclaimer
+                const SizedBox(height: 12),  // Space between TextField and disclaimer
                 Text(
-                  "This prediction is based on our available data and may not reflect your actual result.",
+                  "Predictions are based on available data and may not reflect actual outcomes",
                   style: TextStyle(
                     fontSize: 10,
                     color: Color(0xFF757575),

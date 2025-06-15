@@ -8,9 +8,9 @@ class ThemeController extends GetxController {
   RxInt selectedThemeIndex = 0.obs;
 
   List<CustomTheme> allThemes = [
+    AppThemes.emeraldTheme,
     AppThemes.blackWhiteTheme,
     AppThemes.coloredTheme,
-    AppThemes.emeraldTheme,
     AppThemes.sunsetTheme,
     AppThemes.coolBlueTheme,
   ];
