@@ -20,7 +20,6 @@ import 'package:my_campus_info/view/DetailPage/hostel.dart';
 import 'package:my_campus_info/view/DetailPage/cutoff.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../model/Placement.dart';
 import '../../model/college.dart';
 import '../SignUpLogin/login.dart';

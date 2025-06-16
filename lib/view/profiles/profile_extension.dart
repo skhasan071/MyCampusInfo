@@ -73,20 +73,44 @@ class _EducationPreferenceCardsState extends State<EducationPreferenceCards> {
               Text(
                 pfpController.profile.value!.state == null  && pfpController.profile.value!.studyingIn == null && pfpController.profile.value!.city == null ? '' : 'Location',
                 style: TextStyle(color: Colors.grey),
+                softWrap: true,
               ),
-              SizedBox(height: pfpController.profile.value!.state == null  && pfpController.profile.value!.studyingIn == null && pfpController.profile.value!.city == null ? 0 : 8),
+              SizedBox(height: pfpController.profile.value!.state == null && pfpController.profile.value!.studyingIn == null && pfpController.profile.value!.city == null ? 0 : 8),
               Row(
                 children: [
-                  pfpController.profile.value!.state == null ? SizedBox.shrink() : Icon(Icons.location_on_outlined, size: 18),
+                  pfpController.profile.value!.state == null
+                      ? SizedBox.shrink()
+                      : Icon(Icons.location_on_outlined, size: 18),
                   SizedBox(width: pfpController.profile.value!.state == null ? 0 : 4),
-                  Text('${pfpController.profile.value!.state ?? ''} ${pfpController.profile.value!.city ?? ''}', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black.withOpacity(0.75)),),
+
+                  // Wrap the Text widget inside Flexible for proper wrapping
+                  Flexible(
+                    child: Text(
+                      '${pfpController.profile.value!.state ?? ''} ${pfpController.profile.value!.city ?? ''}',
+                      style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black.withOpacity(0.75)),
+                      softWrap: true,
+                      overflow: TextOverflow.ellipsis,  // Add ellipsis when text overflows
+                    ),
+                  ),
                   SizedBox(width: pfpController.profile.value!.state == null ? 0 : 16),
-                  pfpController.profile.value!.studyingIn == null ? SizedBox.shrink() : Icon(Icons.access_time, size: 18),
+
+                  pfpController.profile.value!.studyingIn == null
+                      ? SizedBox.shrink()
+                      : Icon(Icons.access_time, size: 18),
                   SizedBox(width: pfpController.profile.value!.state == null ? 0 : 4),
-                  Text(pfpController.profile.value!.studyingIn ?? '', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black.withOpacity(0.75)),),
+
+                  // Wrap the Text widget inside Flexible for proper wrapping
+                  Flexible(
+                    child: Text(
+                      pfpController.profile.value!.studyingIn ?? '',
+                      style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black.withOpacity(0.75)),
+                      softWrap: true,
+                      overflow: TextOverflow.ellipsis,  // Add ellipsis when text overflows
+                    ),
+                  ),
                 ],
               ),
-              SizedBox(height: pfpController.profile.value!.state == null  && pfpController.profile.value!.studyingIn == null && pfpController.profile.value!.city == null ? 0 : 8),
+              SizedBox(height: pfpController.profile.value!.state == null && pfpController.profile.value!.studyingIn == null && pfpController.profile.value!.city == null ? 0 : 8),
               Divider(),
               const SizedBox(height: 8),
               GestureDetector(
