@@ -91,6 +91,11 @@ class _SupportPageState extends State<SupportPage> {
               answer:
                   "Our rankings consider factors like placement stats, Nirf, infrastructure, and student reviews.",
             ),
+            const FAQItem(
+              question: "Where is the data for colleges collected from?",
+              answer:
+              "All the data for colleges are inputted by the respective colleges itself, filled through our provided Dataform",
+            ),
             _buildDivider(),
             _subSectionTitle("Contact Us:"),
             _infoRichText("Email: ", "contact.mycampusinfo@gmail.com"),
