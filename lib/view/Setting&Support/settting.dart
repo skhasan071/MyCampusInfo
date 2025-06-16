@@ -139,17 +139,17 @@ class ThemePage extends StatelessWidget {
   ThemePage({super.key});
 
   final themeTitles = [
+    "Emerald",
     "Black & White",
     "Purple",
-    "Emerald",
     "Sunset",
     "Cool Blue",
   ];
 
   final themeColors = [
+    Colors.green,
     Colors.black,
     Color(0xff4B0082),
-    Colors.green,
     Color(0xFFF57C00),
     Color(0xFF1976D2),
   ];

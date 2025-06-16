@@ -76,12 +76,6 @@ class _ReviewsState extends State<Reviews> {
                         ),
                       ),
                       _buildStarRating(averageRating),
-
-                      const SizedBox(height: 4),
-                      const Text(
-                        "Based on 2,456 reviews",
-                        style: TextStyle(color: Colors.black, fontSize: 1),
-                      ),
                     ],
                   ),
                   ElevatedButton(
@@ -304,9 +298,9 @@ class _ReviewsState extends State<Reviews> {
                         fontSize: 22,
                       ),
                     ),
-                    _buildStarRating(rating, iconSize: 18),
                   ],
                 ),
+                _buildStarRating(rating, iconSize: 18),
                 Text(
                   role,
                   style: const TextStyle(

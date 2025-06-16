@@ -283,20 +283,22 @@ class _PlacementDetailsState extends State<PlacementDetails> {
           ),
           DataColumn(
             label: Text(
-              'Highest CTC',
+              'Highest\nCTC',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 color: theme.filterTextColor,
               ),
+              textAlign: TextAlign.center,
             ),
           ),
           DataColumn(
             label: Text(
-              'Average CTC',
+              'Average\nCTC',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 color: theme.filterTextColor,
               ),
+              textAlign: TextAlign.center,
             ),
           ),
         ],
@@ -306,8 +308,8 @@ class _PlacementDetailsState extends State<PlacementDetails> {
               return DataRow(
                 cells: [
                   DataCell(Text(branch.branch)),
-                  DataCell(Text(double.parse(branch.highestPackage).toInt.toString() + ' LPA')),
-                  DataCell(Text(double.parse(branch.averagePackage).toInt.toString() + ' LPA')),
+                  DataCell(Text('${double.parse(branch.highestPackage).toInt()} LPA')),
+                  DataCell(Text('${double.parse(branch.averagePackage).toInt()} LPA')),
                 ],
               );
             }).toList(),

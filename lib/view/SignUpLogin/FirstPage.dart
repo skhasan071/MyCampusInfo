@@ -14,6 +14,9 @@ class Firstpage extends StatefulWidget {
 
 class _FirstpageState extends State<Firstpage> {
 
+  String doubleVal = '29.30';
+  String doubleVal2 = '29.70';
+
   @override
   void initState() {
     super.initState();
@@ -21,6 +24,7 @@ class _FirstpageState extends State<Firstpage> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       backgroundColor: Colors.white,
 
