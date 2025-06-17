@@ -9,6 +9,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import '../../internetCheck/connectivityChecker.dart';
 import '../../resetPassword/SendOtpScreen.dart';
 import '../../view_model/controller.dart';
 import '../../view_model/data_loader.dart';
@@ -30,8 +31,6 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void dispose() {
     super.dispose();
-    emailController.dispose();
-    passwordController.dispose();
   }
 
   var loader = Get.put(Loader());
@@ -174,7 +173,8 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return ConnectivityChecker(  // Wrap the entire content with ConnectivityChecker
+      child:Scaffold(
       backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
@@ -393,7 +393,7 @@ class _LoginPageState extends State<LoginPage> {
           ],
         ),
       ),
-    );
+      ));
   }
 
 

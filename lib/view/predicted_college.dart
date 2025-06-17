@@ -3,6 +3,7 @@ import 'package:my_campus_info/view_model/profile_controller.dart';
 import 'package:my_campus_info/view_model/themeController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../internetCheck/connectivityChecker.dart';
 import '../view_model/controller.dart';
 
 class CollegeResultsPage extends StatefulWidget {
@@ -22,9 +23,11 @@ class _CollegeResultPageState extends State<CollegeResultsPage> {
   Widget build(BuildContext context) {
     return Obx(() {
       final theme = ThemeController.to.currentTheme;
-      return Scaffold(
+      return ConnectivityChecker(  // Wrap the content with ConnectivityChecker
+        child:Scaffold(
         backgroundColor: Colors.white,
-        body: SafeArea(
+        body: ConnectivityChecker(  // Wrap the content with ConnectivityChecker
+          child:  SafeArea(
           child: SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.symmetric(
@@ -163,7 +166,7 @@ class _CollegeResultPageState extends State<CollegeResultsPage> {
             ),
           ),
         ),
-      );
+        )));
     });
   }
 }

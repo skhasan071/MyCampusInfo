@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+import '../../internetCheck/connectivityChecker.dart';
 import '../../services/otp_service.dart';
 import '../../view_model/profile_controller.dart';
 
@@ -118,7 +119,8 @@ class _OtpScreenState extends State<OtpScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return ConnectivityChecker(  // Wrap the content with ConnectivityChecker
+      child:Scaffold(
       backgroundColor: Colors.white,
       body: Center(
         child: Padding(
@@ -210,6 +212,6 @@ class _OtpScreenState extends State<OtpScreen> {
           ),
         ),
       ),
-    );
+      ));
   }
 }

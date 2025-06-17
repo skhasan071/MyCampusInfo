@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../internetCheck/connectivityChecker.dart';
 import '../../services/otp_service.dart';
 import 'otpscreen.dart';
 
@@ -52,7 +53,8 @@ class _MobilenoauthState extends State<Mobilenoauth> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return ConnectivityChecker(  // Wrap the content with ConnectivityChecker
+      child:Scaffold(
       backgroundColor: Colors.white,
       body: Center(
         child: Padding(
@@ -137,6 +139,6 @@ class _MobilenoauthState extends State<Mobilenoauth> {
           ),
         ),
       ),
-    );
+      ) );
   }
 }

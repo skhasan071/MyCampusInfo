@@ -13,8 +13,11 @@ Future<void> main() async {
   Get.put(ShortlistedCollegesController());
   WidgetsFlutterBinding.ensureInitialized();
   runApp(
+
     MyApp(),
+
   );
+
 }
 
 class MyApp extends StatefulWidget {

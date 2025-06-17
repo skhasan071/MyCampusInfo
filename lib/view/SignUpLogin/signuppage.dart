@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../internetCheck/connectivityChecker.dart';
 import '../../services/auth_services.dart';
 import 'login.dart';
 
@@ -165,7 +166,8 @@ class _SignupPageState extends State<SignupPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return ConnectivityChecker(  // Wrap the content with ConnectivityChecker
+      child:Scaffold(
       backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
@@ -401,7 +403,7 @@ class _SignupPageState extends State<SignupPage> {
           ],
         ),
       ),
-    );
+      ) );
   }
 
   // Function to save the token
