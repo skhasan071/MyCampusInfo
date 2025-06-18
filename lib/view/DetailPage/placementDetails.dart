@@ -307,9 +307,9 @@ class _PlacementDetailsState extends State<PlacementDetails> {
             placementData.branchWisePlacement.map((branch) {
               return DataRow(
                 cells: [
-                  DataCell(Text(branch.branch)),
-                  DataCell(Text('${double.parse(branch.highestPackage).toInt()} LPA')),
-                  DataCell(Text('${double.parse(branch.averagePackage).toInt()} LPA')),
+                  DataCell(Text(branch.branch, style: TextStyle(fontSize: 14),)),
+                  DataCell(Text('${double.parse(branch.highestPackage).toInt()} LPA', style: TextStyle(fontSize: 14),)),
+                  DataCell(Text('${double.parse(branch.averagePackage).toInt()} LPA', style: TextStyle(fontSize: 14),)),
                 ],
               );
             }).toList(),

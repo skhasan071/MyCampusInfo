@@ -282,6 +282,7 @@ class _CompareWithState extends State<CompareWith> {
     colleges = await StudentService.getFavoriteColleges(
       profile.profile.value!.id,
     );
+
     colleges.removeWhere((college) => college.id == widget.clg.id);
 
     if (showShortlistedOnly) {

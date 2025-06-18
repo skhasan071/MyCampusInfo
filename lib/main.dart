@@ -1,12 +1,10 @@
 import 'package:my_campus_info/services/shortListCollegeController.dart';
 import 'package:my_campus_info/view/splash_view.dart';
-import 'package:my_campus_info/view/splash_view_2.0.dart';
 import 'package:my_campus_info/view_model/themeController.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 Future<void> main() async {
   Get.put(ThemeController());
