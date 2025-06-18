@@ -2,6 +2,7 @@ import 'package:my_campus_info/view_model/themeController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:my_campus_info/view_model/controller.dart';
+import '../internetCheck/connectivityChecker.dart';
 import '../model/college.dart';
 import '../services/college_services.dart';
 
@@ -80,9 +81,11 @@ class _CollegePredictorScreenState extends State<CollegePredictorPage> {
   Widget build(BuildContext context) {
     return Obx(() {
       final theme = ThemeController.to.currentTheme;
-      return Scaffold(
+      return MaterialApp(  // Ensure MaterialApp is here to provide Material context
+          home:Scaffold(
         backgroundColor: Colors.white,
-        body: SafeArea(
+        body:  ConnectivityChecker(  // Wrap only the body content
+          child:SafeArea(
           child: SingleChildScrollView(
             padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16),
             child: Column(
@@ -240,7 +243,7 @@ class _CollegePredictorScreenState extends State<CollegePredictorPage> {
             ),
           ),
         ),
-      );
+      )));
     });
   }
 

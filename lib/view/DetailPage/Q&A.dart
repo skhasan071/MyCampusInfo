@@ -289,7 +289,7 @@ class _AskQuestionPageState extends State<AskQuestionPage> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            "An error occurred",
+            "Submission failed",
             style: TextStyle(color: theme.filterTextColor),
           ),
           backgroundColor: theme.filterSelectedColor,

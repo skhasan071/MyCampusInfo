@@ -238,7 +238,7 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text(
-                                "Please enter valid Mobile Number",
+                                "Please enter valid Mobile Number including +91",
                                 style: TextStyle(color: Colors.white),
                               ),
                               backgroundColor: Colors.black,
@@ -334,7 +334,7 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
                           if (studyingIn == null || studyingIn!.isEmpty) {
                             showSnack(
                               context,
-                              "Please select what you are studying in",
+                              "Please select what you are studying",
                             );
                             return;
                           }

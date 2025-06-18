@@ -30,7 +30,7 @@ class Cost extends StatelessWidget {
         return null;
       }
     } catch (e) {
-      print("Error: $e");
+      print("Cannot fetch data please retry.");
       return null;
     }
   }
@@ -67,7 +67,7 @@ class Cost extends StatelessWidget {
                 ),
               );
             } else if (snapshot.hasError || snapshot.data == null) {
-              return const Center(child: Text("Failed to load data"));
+              return const Center(child: Text("Cannot fetch data please retry."));
             }
 
             final cost = snapshot.data!;

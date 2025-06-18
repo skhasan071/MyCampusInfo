@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import '../../internetCheck/connectivityChecker.dart';
 import 'blog_detail_page.dart';
 
 class BlogPage extends StatefulWidget {
@@ -42,8 +43,9 @@ class _BlogPageState extends State<BlogPage> {
     return Obx(() {
       final theme = ThemeController.to.currentTheme;
       return Scaffold(
-        backgroundColor: Colors.white,
-        body: SafeArea(
+          backgroundColor: Colors.white,
+          body:  ConnectivityChecker(  // Wrap only the body content
+          child:SafeArea(
           child: SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.all(16.0),
@@ -111,7 +113,7 @@ class _BlogPageState extends State<BlogPage> {
             ),
           ),
         ),
-      );
+      ));
     });
   }
 }

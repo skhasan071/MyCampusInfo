@@ -99,7 +99,7 @@ class _CollegeDetailState extends State<CollegeDetail> {
     } else {
       setState(() {
         isLoading = false;
-        errorMessage = "Error fetching placement data.";
+        errorMessage = "Cannot fetch data please retry.";
       });
     }
   }

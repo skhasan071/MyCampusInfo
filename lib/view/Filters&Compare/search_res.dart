@@ -5,6 +5,8 @@ import 'package:my_campus_info/view_model/profile_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../internetCheck/connectivityChecker.dart';
+
 class SearchRes extends StatelessWidget {
   List<College> colleges = [];
 
@@ -15,8 +17,8 @@ class SearchRes extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-
+    return ConnectivityChecker(  // Wrap the entire Scaffold inside ConnectivityChecker
+      child: Scaffold(
       backgroundColor: Colors.white,
 
       appBar: AppBar(
@@ -69,6 +71,6 @@ class SearchRes extends StatelessWidget {
                   ),
                 ),
               ),
-    );
+      ) );
   }
 }

@@ -1,9 +1,11 @@
 import 'dart:convert';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:my_campus_info/view_model/controller.dart';
 import 'package:my_campus_info/view_model/themeController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import '../../internetCheck/noInternetScreen.dart';
 import '../SignUpLogin/login.dart';
 
 class SupportPage extends StatefulWidget {
@@ -434,53 +436,54 @@ class ReportIssuePage extends StatefulWidget {
 
 class _ReportIssuePageState extends State<ReportIssuePage> {
   final theme = ThemeController.to.currentTheme;
-
-  Future<void> submitIssue() async {
-    const url = 'https://tc-ca-server.onrender.com/api/colleges/report';
-
-    try {
-      final response = await http.post(
-        Uri.parse(url),
-        headers: {'Content-Type': 'application/json'},
-        body: json.encode({
-          'issueType': issueType,
-          'profession': profession,
-          'name': _nameController.text.trim(),
-          'email': _emailController.text.trim(),
-          'description': _descriptionController.text.trim(),
-          'stepsToReproduce': _reproduceController.text.trim(),
-        }),
-      );
-
-      if (response.statusCode == 201) {
-        if (!mounted) return;
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              "Issue reported successfully",
-              style: TextStyle(color: theme.filterTextColor),
-            ),
-            backgroundColor: theme.filterSelectedColor,
-          ),
-        );
-        Navigator.pop(context);
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              "Failed to submit issue",
-              style: TextStyle(color: theme.filterTextColor),
-            ),
-            backgroundColor: theme.filterSelectedColor,
-          ),
-        );
-      }
-    } catch (e) {
-      ScaffoldMessenger.of(
+  void submitIssue() async {
+    final connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.none) {
+      // No internet connection, show "No Internet" screen
+      Navigator.pushReplacement(
         context,
-      ).showSnackBar(SnackBar(content: Text("Error: $e")));
+        MaterialPageRoute(builder: (context) => NoInternetScreen(currentScreen: ReportIssuePage())),
+      );
+    } else {
+      // Proceed with issue submission
+      const url = 'https://tc-ca-server.onrender.com/api/colleges/report';
+
+      try {
+        final response = await http.post(
+          Uri.parse(url),
+          headers: {'Content-Type': 'application/json'},
+          body: json.encode({
+            'issueType': issueType,
+            'profession': profession,
+            'name': _nameController.text.trim(),
+            'email': _emailController.text.trim(),
+            'description': _descriptionController.text.trim(),
+            'stepsToReproduce': _reproduceController.text.trim(),
+          }),
+        );
+
+        if (response.statusCode == 201) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text("Issue reported successfully", style: TextStyle(color: theme.filterTextColor)),
+              backgroundColor: theme.filterSelectedColor,
+            ),
+          );
+          Navigator.pop(context);
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text("Failed to submit issue", style: TextStyle(color: theme.filterTextColor)),
+              backgroundColor: theme.filterSelectedColor,
+            ),
+          );
+        }
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Error: $e")));
+      }
     }
   }
+
 
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
@@ -757,51 +760,53 @@ class FeedbackPage extends StatefulWidget {
 
 class _FeedbackPageState extends State<FeedbackPage> {
   final theme = ThemeController.to.currentTheme;
-  Future<void> submitFeedback() async {
-    const url = 'https://tc-ca-server.onrender.com/api/colleges/feedback';
-
-    try {
-      final response = await http.post(
-        Uri.parse(url),
-        headers: {'Content-Type': 'application/json'},
-        body: json.encode({
-          'feedbackType': feedbackType,
-          'profession': profession,
-          'name': _nameController.text.trim(),
-          'email': _emailController.text.trim(),
-          'feedback': _feedbackController.text.trim(),
-        }),
-      );
-
-      if (response.statusCode == 201) {
-        if (!mounted) return;
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              "Feedback Submitted successfully",
-              style: TextStyle(color: theme.filterTextColor),
-            ),
-            backgroundColor: theme.filterSelectedColor,
-          ),
-        );
-        Navigator.pop(context);
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              "Failed to submit Feedback",
-              style: TextStyle(color: theme.filterTextColor),
-            ),
-            backgroundColor: theme.filterSelectedColor,
-          ),
-        );
-      }
-    } catch (e) {
-      ScaffoldMessenger.of(
+  void submitFeedback() async {
+    final connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.none) {
+      // No internet connection, show "No Internet" screen
+      Navigator.pushReplacement(
         context,
-      ).showSnackBar(SnackBar(content: Text("Error: $e")));
+        MaterialPageRoute(builder: (context) => NoInternetScreen(currentScreen: FeedbackPage())),
+      );
+    } else {
+      // Proceed with feedback submission
+      const url = 'https://tc-ca-server.onrender.com/api/colleges/feedback';
+
+      try {
+        final response = await http.post(
+          Uri.parse(url),
+          headers: {'Content-Type': 'application/json'},
+          body: json.encode({
+            'feedbackType': feedbackType,
+            'profession': profession,
+            'name': _nameController.text.trim(),
+            'email': _emailController.text.trim(),
+            'feedback': _feedbackController.text.trim(),
+          }),
+        );
+
+        if (response.statusCode == 201) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text("Feedback Submitted successfully", style: TextStyle(color: theme.filterTextColor)),
+              backgroundColor: theme.filterSelectedColor,
+            ),
+          );
+          Navigator.pop(context);
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text("Failed to submit Feedback", style: TextStyle(color: theme.filterTextColor)),
+              backgroundColor: theme.filterSelectedColor,
+            ),
+          );
+        }
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Error: $e")));
+      }
     }
   }
+
 
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();

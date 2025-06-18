@@ -13,6 +13,7 @@ import 'package:my_campus_info/view/Filters&Compare/shortlistCollegePage.dart';
 import 'package:my_campus_info/view_model/themeController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../internetCheck/connectivityChecker.dart';
 import '../view_model/controller.dart';
 import '../view_model/profile_controller.dart';
 import 'Setting&Support/notification_page.dart';
@@ -170,23 +171,20 @@ class _HomePageState extends State<HomePage> {
             return false;
           }
         },
-        child: Scaffold(
-          key: scaffoldKey,
-
-          backgroundColor: Colors.white,
-
-          appBar: getAppBar(),
-
-          body: Obx(
-            () =>
-                controller.isLoggedIn.value || controller.isGuestIn.value
-                    ? screens[controller.navSelectedIndex.value]
-                    : Center(child: CircularProgressIndicator(color: Colors.black,)),
+        child: ConnectivityChecker(  // Wrap the entire Scaffold inside ConnectivityChecker
+          child: Scaffold(
+            key: scaffoldKey,
+            backgroundColor: Colors.white,
+            appBar: getAppBar(),
+            body: Obx(
+                  () =>
+              controller.isLoggedIn.value || controller.isGuestIn.value
+                  ? screens[controller.navSelectedIndex.value]
+                  : Center(child: CircularProgressIndicator(color: Colors.black,)),
+            ),
+            drawer: DrawerWidget(scaffoldKey, shortlistedCollegesCount),
+            bottomNavigationBar: getBottomNavBar(),  // Ensure this is outside any conditional check
           ),
-
-          drawer: DrawerWidget(scaffoldKey, shortlistedCollegesCount),
-
-          bottomNavigationBar: getBottomNavBar(),
         ),
       );
     });
