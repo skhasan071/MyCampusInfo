@@ -201,7 +201,7 @@ class _CompareWithState extends State<CompareWith> {
                       child: Center(
                         child: Text(
                           showShortlistedOnly
-                              ? "No colleges shortlisted"
+                              ? "No such college shortlisted"
                               : "No colleges found",
                           style: const TextStyle(
                             fontSize: 16,

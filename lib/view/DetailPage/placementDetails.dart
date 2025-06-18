@@ -51,7 +51,7 @@ class _PlacementDetailsState extends State<PlacementDetails> {
       setState(() {
         isLoading = false;
         errorMessage =
-            "Error fetching placement data."; // Set error message if there is an API error
+            "Cannot fetch data please retry."; // Set error message if there is an API error
       });
     }
   }

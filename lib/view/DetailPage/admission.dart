@@ -41,7 +41,7 @@ class _AdmissionState extends State<Admission> {
       }
     } catch (e) {
       setState(() {
-        errorMessage = 'An error occurred: $e';
+        errorMessage = 'Cannot fetch data please retry.';
         isLoading = false;
       });
     }

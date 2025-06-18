@@ -48,7 +48,7 @@ class _HostelState extends State<Hostel> {
     } else {
       setState(() {
         isLoading = false;
-        errorMessage = "Error fetching hostel data.";
+        errorMessage = "Cannot fetch data please retry";
       });
     }
   }
