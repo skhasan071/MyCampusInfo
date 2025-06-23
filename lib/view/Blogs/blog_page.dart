@@ -1,9 +1,12 @@
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:my_campus_info/constants/ui_helper.dart';
+import 'package:my_campus_info/view_model/network_controller.dart';
 import 'package:my_campus_info/view_model/themeController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import '../../internetCheck/connectivityChecker.dart';
 import 'blog_detail_page.dart';
 
 class BlogPage extends StatefulWidget {
@@ -19,7 +22,7 @@ class _BlogPageState extends State<BlogPage> {
   // Fetch blogs from the backend
   Future<void> fetchBlogs() async {
     final response = await http.get(
-      Uri.parse('https://tc-ca-server.onrender.com/api/colleges/get/Blogs'),
+      Uri.parse('http://3.7.169.233:8080/api2/colleges/get/Blogs'),
     ); // Change to your backend URL
 
     if (response.statusCode == 200) {
@@ -38,14 +41,15 @@ class _BlogPageState extends State<BlogPage> {
     fetchBlogs(); // Fetch blogs when the page is loaded
   }
 
+  final networkController = Get.find<NetworkController>();
+
   @override
   Widget build(BuildContext context) {
     return Obx(() {
       final theme = ThemeController.to.currentTheme;
       return Scaffold(
           backgroundColor: Colors.white,
-          body:  ConnectivityChecker(  // Wrap only the body content
-          child:SafeArea(
+          body:  SafeArea(
           child: SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.all(16.0),
@@ -112,8 +116,8 @@ class _BlogPageState extends State<BlogPage> {
               ),
             ),
           ),
-        ),
-      ));
+                  )
+      );
     });
   }
 }

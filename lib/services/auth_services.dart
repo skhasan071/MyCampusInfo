@@ -1,14 +1,15 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:my_campus_info/model/user.dart';
 import 'package:http/http.dart' as http;
 
 class AuthService {
 
-  static const String baseUrl = 'https://tc-ca-server.onrender.com/api/students/student';
+  static const String baseUrl = 'http://3.7.169.233:8080/api2/students';
 
   // 🔹 Register Student
   static Future<Map<String, dynamic>> registerStudent(String name, String email, String password) async {
-    final url = Uri.parse('$baseUrl/register');
+    final url = Uri.parse('$baseUrl/student/register');
 
     try {
       final response = await http.post(
@@ -35,17 +36,17 @@ class AuthService {
         return {"success": false, "message": formatErrorMessage(data['error']['details'][0]['message'])};
 
       }
-    } catch (e) {
-
+    } on SocketException{
+      return {"success": false, "message": 'No Internet Connection'};
+    }catch (e) {
       print(e);
       return {"success": false, "message": e.toString()};
-
     }
   }
 
   // 🔹 Login Student
   static Future<Map<String, dynamic>> loginStudent(String email, String password) async {
-    final url = Uri.parse('$baseUrl/login');
+    final url = Uri.parse('$baseUrl/student/login');
 
     try {
       final response = await http.post(
@@ -70,14 +71,16 @@ class AuthService {
         final data = jsonDecode(response.body);
         return {"success": false, "message": formatErrorMessage(data['message'])};
       }
-    } catch (e) {
+    }  on SocketException{
+      return {"success": false, "message": 'No Internet Connection'};
+    }catch (e) {
       return {"success": false, "message": e.toString()};
     }
   }
 
   static Future<Map<String, dynamic>> loginViaGoogle(String tokenId) async{
 
-    final url = Uri.parse('$baseUrl/google/login');
+    final url = Uri.parse('$baseUrl/student/google/login');
 
     try{
 
@@ -106,6 +109,8 @@ class AuthService {
         return {"success": false, "message": formatErrorMessage(data['message'])};
       }
 
+    } on SocketException{
+      return {"success": false, "message": 'No Internet Connection'};
     }catch(e){
       return {"success": false, "message": e.toString()};
     }
@@ -113,7 +118,7 @@ class AuthService {
   }
 
   static Future<Map<String, dynamic>> sendOtp(String email) async {
-    final url = Uri.parse('https://tc-ca-server.onrender.com/api/students/forgot-password/send-otp');
+    final url = Uri.parse('$baseUrl/forgot-password/send-otp');
 
     try {
       final response = await http.post(
@@ -130,6 +135,8 @@ class AuthService {
         return {"success": false, "message": data['message']};
       }
 
+    } on SocketException{
+      return {"success": false, "message": 'No Internet Connection'};
     } catch (e) {
       print(e);
       return {"success": false, "message": e.toString()};
@@ -142,7 +149,7 @@ class AuthService {
     required String otp,
     required String newPassword,
   }) async {
-    final url = Uri.parse('https://tc-ca-server.onrender.com/api/students/forgot-password/verify-otp');
+    final url = Uri.parse('$baseUrl/forgot-password/verify-otp');
 
     try {
       final response = await http.post(
@@ -162,6 +169,8 @@ class AuthService {
       } else {
         return {"success": false, "message": data['message']};
       }
+    } on SocketException{
+      return {"success": false, "message": 'No Internet Connection'};
     } catch (e) {
       return {"success": false, "message": e.toString()};
     }

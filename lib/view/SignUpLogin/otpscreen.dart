@@ -1,13 +1,8 @@
 import 'dart:async';
-import 'package:my_campus_info/model/user.dart';
 import 'package:my_campus_info/view/profiles/complete_profile_page.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
-import '../../internetCheck/connectivityChecker.dart';
 import '../../services/otp_service.dart';
-import '../../view_model/profile_controller.dart';
 
 class OtpScreen extends StatefulWidget {
   final String phone;
@@ -119,99 +114,98 @@ class _OtpScreenState extends State<OtpScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ConnectivityChecker(  // Wrap the content with ConnectivityChecker
-      child:Scaffold(
-      backgroundColor: Colors.white,
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset('assets/otpscreen.jpg', height: 150),
-              SizedBox(height: 20),
+    return Scaffold(
+    backgroundColor: Colors.white,
+    body: Center(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 24.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset('assets/otpscreen.jpg', height: 150),
+            SizedBox(height: 20),
 
-              Text(
-                "OTP Verification",
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+            Text(
+              "OTP Verification",
+              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 10),
+
+            Text(
+              "Enter OTP sent to your mobile\n+91-${widget.phone.substring(3, 8)}-xxxxx",
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 16, color: Colors.grey),
+            ),
+            SizedBox(height: 15),
+
+            SizedBox(
+              width: 300,
+              child: PinCodeTextField(
+                length: 6,
+                controller: otpController,
+                onChanged: (value) => otpCode = value,
+                keyboardType: TextInputType.number,
+                textStyle: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                ),
+                pinTheme: PinTheme(
+                  shape: PinCodeFieldShape.underline,
+                  fieldHeight: 50,
+                  fieldWidth: 40,
+                  inactiveColor: Colors.black54,
+                  activeColor: Colors.blue,
+                  selectedColor: Colors.blueAccent,
+                ),
+                animationType: AnimationType.fade,
+                animationDuration: Duration(milliseconds: 200),
+                appContext: context,
               ),
-              SizedBox(height: 10),
+            ),
+            SizedBox(height: 20),
 
-              Text(
-                "Enter OTP sent to your mobile\n+91-${widget.phone.substring(3, 8)}-xxxxx",
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 16, color: Colors.grey),
-              ),
-              SizedBox(height: 15),
+            Text(
+              countdown > 0
+                  ? "Resend OTP in ${countdown}s"
+                  : "Didn't receive OTP?",
+              style: TextStyle(fontSize: 16, color: Colors.grey),
+            ),
+            SizedBox(height: 10),
 
-              SizedBox(
-                width: 300,
-                child: PinCodeTextField(
-                  length: 6,
-                  controller: otpController,
-                  onChanged: (value) => otpCode = value,
-                  keyboardType: TextInputType.number,
-                  textStyle: TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  pinTheme: PinTheme(
-                    shape: PinCodeFieldShape.underline,
-                    fieldHeight: 50,
-                    fieldWidth: 40,
-                    inactiveColor: Colors.black54,
-                    activeColor: Colors.blue,
-                    selectedColor: Colors.blueAccent,
-                  ),
-                  animationType: AnimationType.fade,
-                  animationDuration: Duration(milliseconds: 200),
-                  appContext: context,
+            TextButton(
+              onPressed: isResendEnabled ? resendOtp : null,
+              child: Text(
+                "Resend OTP",
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: isResendEnabled ? Colors.blue : Colors.grey,
                 ),
               ),
-              SizedBox(height: 20),
+            ),
+            SizedBox(height: 20),
 
-              Text(
-                countdown > 0
-                    ? "Resend OTP in ${countdown}s"
-                    : "Didn't receive OTP?",
-                style: TextStyle(fontSize: 16, color: Colors.grey),
-              ),
-              SizedBox(height: 10),
-
-              TextButton(
-                onPressed: isResendEnabled ? resendOtp : null,
+            SizedBox(
+              width: double.infinity,
+              height: 50,
+              child: ElevatedButton(
+                onPressed: verifyOtp,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.black,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
                 child: Text(
-                  "Resend OTP",
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: isResendEnabled ? Colors.blue : Colors.grey,
-                  ),
+                  "Continue",
+                  style: TextStyle(fontSize: 18, color: Colors.white),
                 ),
               ),
-              SizedBox(height: 20),
-
-              SizedBox(
-                width: double.infinity,
-                height: 50,
-                child: ElevatedButton(
-                  onPressed: verifyOtp,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.black,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                  ),
-                  child: Text(
-                    "Continue",
-                    style: TextStyle(fontSize: 18, color: Colors.white),
-                  ),
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
-      ));
+    ),
+    );
   }
 }

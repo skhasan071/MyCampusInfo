@@ -32,7 +32,7 @@ class _HostelState extends State<Hostel> {
   // Fetch hostel data from the API
   Future<void> fetchHostelDetails() async {
     final url =
-        'https://tc-ca-server.onrender.com/api/colleges/hostel/${widget.collegeId}';
+        'http://3.7.169.233:8080/api2/colleges/hostel/${widget.collegeId}';
     final response = await http.get(Uri.parse(url));
 
     if (response.statusCode == 200) {

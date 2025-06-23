@@ -1,4 +1,7 @@
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:my_campus_info/constants/colors.dart';
+import 'package:my_campus_info/view_model/network_controller.dart';
 import 'package:my_campus_info/view_model/themeController.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -132,4 +135,15 @@ class UiHelper {
       child: widget,
     );
   }
+  
+  static showNoInternetError(BuildContext context){
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('No Internet Connection', style: TextStyle(fontWeight: FontWeight.w400, fontSize: 16, color: Colors.white,),),
+        backgroundColor: Colors.red,
+        behavior: SnackBarBehavior.floating,
+      )
+    );
+  }
+
 }

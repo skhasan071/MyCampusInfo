@@ -8,7 +8,7 @@ import '../model/review.dart';
 
 class StudentService {
   static const String _baseUrl =
-      'https://tc-ca-server.onrender.com/api/students';
+      'http://3.7.169.233/api2/students';
 
   Future<Student?> fetchStudentById(String id) async {
     final url = Uri.parse(
@@ -213,7 +213,7 @@ class StudentService {
 
   Future<Review?> postReview(Review review) async {
     final url = Uri.parse(
-      'https://tc-ca-server.onrender.com/api/colleges/reviews',
+      'http://3.7.169.233:8080/api2/colleges/reviews',
     );
 
     try {
@@ -235,7 +235,7 @@ class StudentService {
 
   Future<List<Review>> getReviews(String uid) async {
     final url = Uri.parse(
-      'https://tc-ca-server.onrender.com/api/colleges/reviews/getAll/$uid',
+      'http://3.7.169.233:8080/api2/colleges/reviews/getAll/$uid',
     );
 
     final response = await http.get(url);

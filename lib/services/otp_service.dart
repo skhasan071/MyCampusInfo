@@ -8,12 +8,12 @@ import '../model/user.dart';
 import '../view_model/profile_controller.dart';
 
 class OtpService {
-  final String baseUrl = 'https://tc-ca-server.onrender.com';
+  final String baseUrl = 'http://3.7.169.233:8080/api2';
   final pfpController = Get.put(ProfileController());
 
   /// Send OTP to the given phone number
   Future<bool> sendOtp(String phone) async {
-    final url = Uri.parse('$baseUrl/api/students/send-otp');
+    final url = Uri.parse('$baseUrl/students/send-otp');
     try {
       final response = await http.post(
         url,
@@ -36,7 +36,7 @@ class OtpService {
 
   /// Verify the OTP for the given phone number
   Future<bool> verifyOtp(String phone, String otp) async {
-    final url = Uri.parse('$baseUrl/api/students/send-otp');
+    final url = Uri.parse('$baseUrl/students/send-otp');
     try {
       final response = await http.post(
         url,

@@ -148,7 +148,7 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
                 ),
                 const SizedBox(height: 24),
 
-                const Text("Enter your name"),
+                const Text("Enter your name *"),
                 const SizedBox(height: 8),
                 UiHelper.getTextField(hint: "Name", controller: nameController),
                 const SizedBox(height: 16),

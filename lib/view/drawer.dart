@@ -35,7 +35,10 @@ class DrawerWidget extends StatelessWidget {
                   child: Column(
                     children: [
                       Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
+                          Image.asset('assets/my_campus_info_logo_no_bg.png', height: 30, width: 30,),
+                          SizedBox(width: 8,),
                           Text(
                             'MyCampusInfo',
                             style: TextStyle(

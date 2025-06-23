@@ -198,7 +198,7 @@ class ThemePage extends StatelessWidget {
                   themeTitles[index],
                   style: TextStyle(
                     fontSize: 17,
-                    fontFamily: 'Cursive',
+                    fontFamily: 'Poppins',
                     color: color,
                     fontWeight:
                         isSelected ? FontWeight.bold : FontWeight.normal,

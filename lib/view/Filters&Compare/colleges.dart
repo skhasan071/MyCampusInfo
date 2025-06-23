@@ -8,6 +8,7 @@ import 'package:my_campus_info/view/profiles/choice_preferences.dart';
 import 'package:my_campus_info/view_model/controller.dart';
 import 'package:my_campus_info/view_model/data_loader.dart';
 import 'package:my_campus_info/view_model/filterController.dart';
+import 'package:my_campus_info/view_model/network_controller.dart';
 import 'package:my_campus_info/view_model/profile_controller.dart';
 import 'package:my_campus_info/view_model/saveController.dart';
 import 'package:my_campus_info/view_model/themeController.dart';
@@ -50,101 +51,100 @@ class _CollegesState extends State<Colleges> {
     return Obx(() {
       final theme = ThemeController.to.currentTheme;
       return Scaffold(
-        backgroundColor: Colors.white,
-
-        body: SafeArea(
-          child: Obx(
-            () =>
-                !loader.isLoading.value
-                    ? SingleChildScrollView(
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 4,
+          backgroundColor: Colors.white,
+          body: SafeArea(
+            child: Obx(
+                  () =>
+              !loader.isLoading.value
+                  ? SingleChildScrollView(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 4,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 4.0),
+                        child: Text(
+                          "Hello, ${profile.profile.value == null ? "Guest" : profile.profile.value!.name}",
+                          style: TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(left: 4.0),
-                              child: Text(
-                                "Hello, ${profile.profile.value == null ? "Guest" : profile.profile.value!.name}",
-                                style: TextStyle(
-                                  fontSize: 22,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                      ),
+
+                      !controller.isGuestIn.value
+                          ? rankings.isNotEmpty
+                          ? _buildSection(
+                        "Colleges Based on NIRF",
+                        rankings,
+                      )
+                          : Container()
+                          : Container(),
+
+                      _buildBox(
+                        title: "Explore College as per your preference.",
+                        buttonText: "Edit Preferences",
+                        pageNo: 0,
+                        callback: () {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder:
+                                  (context) => CoursePreferencesPage(
+                                isFlow: false,
                               ),
                             ),
-
-                            !controller.isGuestIn.value
-                                ? rankings.isNotEmpty
-                                    ? _buildSection(
-                                      "Colleges Based on NIRF",
-                                      rankings,
-                                    )
-                                    : Container()
-                                : Container(),
-
-                            _buildBox(
-                              title: "Explore College as per your preference.",
-                              buttonText: "Edit Preferences",
-                              pageNo: 0,
-                              callback: () {
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder:
-                                        (context) => CoursePreferencesPage(
-                                          isFlow: false,
-                                        ),
-                                  ),
-                                );
-                              },
-                            ),
-
-                            states.isNotEmpty
-                                ? _buildSection(
-                                  "Colleges Based on State",
-                                  states,
-                                )
-                                : Container(),
-
-                            _buildBox(
-                              title: "Which colleges match your preferences?",
-                              buttonText: "Predict My College",
-                              pageNo: 3,
-                            ),
-
-                            cities.isNotEmpty
-                                ? _buildSection(
-                                  "Colleges Based on City",
-                                  cities,
-                                )
-                                : Container(),
-
-                            _buildBox(
-                              title: "Want the latest insights on colleges?",
-                              buttonText: "Read Insights",
-                              pageNo: 2,
-                            ),
-
-                            controller.isLoggedIn.value && privates.isNotEmpty
-                                ? _buildSection(
-                                  "Popular Private Colleges",
-                                  privates,
-                                )
-                                : Container(),
-                          ],
-                        ),
+                          );
+                        },
                       ),
-                    )
-                    : Center(
-                      child: CircularProgressIndicator(
-                        color: theme.filterSelectedColor,
+
+                      states.isNotEmpty
+                          ? _buildSection(
+                        "Colleges Based on State",
+                        states,
+                      )
+                          : Container(),
+
+                      _buildBox(
+                        title: "Which colleges match your preferences?",
+                        buttonText: "Predict My College",
+                        pageNo: 3,
                       ),
-                    ),
-          ),
-        ),
+
+                      cities.isNotEmpty
+                          ? _buildSection(
+                        "Colleges Based on City",
+                        cities,
+                      )
+                          : Container(),
+
+                      _buildBox(
+                        title: "Want the latest insights on colleges?",
+                        buttonText: "Read Insights",
+                        pageNo: 2,
+                      ),
+
+                      controller.isLoggedIn.value && privates.isNotEmpty
+                          ? _buildSection(
+                        "Popular Private Colleges",
+                        privates,
+                      )
+                          : Container(),
+                    ],
+                  ),
+                ),
+              )
+                  : Center(
+                child: CircularProgressIndicator(
+                  color: theme.filterSelectedColor,
+                ),
+              ),
+            ),
+          )
       );
     });
   }

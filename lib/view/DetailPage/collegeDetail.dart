@@ -80,7 +80,7 @@ class _CollegeDetailState extends State<CollegeDetail> {
 
   Future<void> fetchPlacementData() async {
     final url =
-        'https://tc-ca-server.onrender.com/api/colleges/placement/${widget.college.id}';
+        'http://3.7.169.233:8080/api2/colleges/placement/${widget.college.id}';
     final response = await http.get(Uri.parse(url));
 
     if (response.statusCode == 200) {

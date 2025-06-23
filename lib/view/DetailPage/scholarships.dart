@@ -55,7 +55,7 @@ class _ScholarshipsState extends State<Scholarships> {
   }
 
   Future<Map<String, dynamic>> fetchScholarshipByCollegeId(String collegeId) async {
-    final url = Uri.parse('https://tc-ca-server.onrender.com/api/colleges/scholarships/$collegeId');
+    final url = Uri.parse('http://3.7.169.233:8080/api2/colleges/scholarships/$collegeId');
 
     try {
       final response = await http.get(url);

@@ -7,8 +7,6 @@ import 'package:my_campus_info/view_model/themeController.dart';
 import 'package:flutter/material.dart';
 import 'package:my_campus_info/constants/card.dart';
 import 'package:get/get.dart';
-import '../../internetCheck/connectivityChecker.dart';
-import '../../internetCheck/noInternetScreen.dart';
 import '../../services/shortListCollegeController.dart';
 
 class ShortlistedCollegesPage extends StatefulWidget {
@@ -36,7 +34,6 @@ class _ShortlistedCollegesPageState extends State<ShortlistedCollegesPage> {
   }
   @override
   Widget build(BuildContext context) {
-
         return Obx(() {
           final theme = ThemeController.to.currentTheme;
           return Scaffold(

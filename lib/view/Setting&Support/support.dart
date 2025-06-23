@@ -446,7 +446,7 @@ class _ReportIssuePageState extends State<ReportIssuePage> {
       );
     } else {
       // Proceed with issue submission
-      const url = 'https://tc-ca-server.onrender.com/api/colleges/report';
+      const url = 'http://3.7.169.233:8080/api2/colleges/report';
 
       try {
         final response = await http.post(
@@ -770,7 +770,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
       );
     } else {
       // Proceed with feedback submission
-      const url = 'https://tc-ca-server.onrender.com/api/colleges/feedback';
+      const url = 'http://3.7.169.233:8080/api2/colleges/feedback';
 
       try {
         final response = await http.post(

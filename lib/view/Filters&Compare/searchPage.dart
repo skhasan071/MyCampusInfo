@@ -1,5 +1,7 @@
+import 'package:my_campus_info/constants/ui_helper.dart';
 import 'package:my_campus_info/services/college_services.dart';
 import 'package:my_campus_info/view/Filters&Compare/search_res.dart';
+import 'package:my_campus_info/view_model/network_controller.dart';
 import 'package:my_campus_info/view_model/themeController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -18,6 +20,7 @@ class SelectionPage extends StatefulWidget {
 class _SelectionPageState extends State<SelectionPage> {
 
   final controller = Get.put(SelectionController());
+  final networkController = Get.find<NetworkController>();
 
   var searchCtrl = TextEditingController();
 
@@ -107,21 +110,27 @@ class _SelectionPageState extends State<SelectionPage> {
                           onPressed: () async {
 
                             if(searchCtrl.text.isNotEmpty){
-                              List<College> clgs = await CollegeServices()
-                                  .searchColleges(
-                                searchText: searchCtrl.text.trim(),
-                                streams: controller.selectedStreams.toList(),
-                                states: controller.selectedStates.toList(),
-                                cities: controller.selectedCities.toList(),
-                              );
-                              seacrhScope.unfocus();
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
 
-                                  builder: (context) => SearchRes(clgs),
-                                ),
-                              );
+                              if(networkController.isConnected.value){
+                                List<College> clgs = await CollegeServices()
+                                    .searchColleges(
+                                  searchText: searchCtrl.text.trim(),
+                                  streams: controller.selectedStreams.toList(),
+                                  states: controller.selectedStates.toList(),
+                                  cities: controller.selectedCities.toList(),
+                                );
+                                seacrhScope.unfocus();
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+
+                                    builder: (context) => SearchRes(clgs),
+                                  ),
+                                );
+                              }else{
+                                UiHelper.showNoInternetError(context);
+                              }
+
                             }else{
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(

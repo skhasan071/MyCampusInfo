@@ -165,7 +165,7 @@ class _CoursesState extends State<Courses> with TickerProviderStateMixin {
                               child: _buildCourseCard(
                                 courseName: course.courseName,
                                 duration: course.duration,
-                                fees: '\$${course.fees}',
+                                fees: '${course.fees}Rs',
                                 eligibility: course.examType,
                                 intake: course.maxRankOrPercentile.toString(),
                                 RankPer:course.rankType,
@@ -227,6 +227,7 @@ class _CoursesState extends State<Courses> with TickerProviderStateMixin {
   }) {
     return Obx(() {
       final theme = ThemeController.to.currentTheme;
+      print(courseName + '<------------->');
       return Container(
         padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(
@@ -272,24 +273,24 @@ class _CoursesState extends State<Courses> with TickerProviderStateMixin {
             _buildCourseDetail('Annual Fees', fees),
             _buildCourseDetail('Eligibility', eligibility),
             _buildCourseDetail(RankPer, intake),
-            const SizedBox(height: 12),
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: theme.filterSelectedColor,
-                  padding: const EdgeInsets.symmetric(vertical: 12),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.zero,
-                  ),
-                ),
-                onPressed: () {},
-                child: const Text(
-                  'Apply Now',
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-            ),
+            // const SizedBox(height: 12),
+            // SizedBox(
+            //   width: double.infinity,
+            //   child: ElevatedButton(
+            //     style: ElevatedButton.styleFrom(
+            //       backgroundColor: theme.filterSelectedColor,
+            //       padding: const EdgeInsets.symmetric(vertical: 12),
+            //       shape: RoundedRectangleBorder(
+            //         borderRadius: BorderRadius.zero,
+            //       ),
+            //     ),
+            //     onPressed: () {},
+            //     child: const Text(
+            //       'Apply Now',
+            //       style: TextStyle(color: Colors.white),
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       );

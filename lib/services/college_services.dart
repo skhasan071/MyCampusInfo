@@ -9,7 +9,7 @@ import '../model/course.dart';
 
 class CollegeServices {
 
-  static const String _baseUrl = 'https://tc-ca-server.onrender.com/api/colleges/';
+  static const String _baseUrl = 'http://3.7.169.233:8080/api2/colleges/';
 
   /// Get all colleges
   static Future<List<College>> getColleges() async {
@@ -30,8 +30,9 @@ class CollegeServices {
   }
 
   Future<List<College>> searchColleges({required String searchText, List<String>? streams, List<String>? states, List<String>? cities,}) async {
-    final uri = Uri.https('tc-ca-server.onrender.com', '/api/colleges/search', {
+    final uri = Uri.http('3.7.169.233', '/api2/colleges/search', {
       'search': searchText,
+
       if (streams != null && streams.isNotEmpty) 'stream': streams.join(','),
       if (states != null && states.isNotEmpty) 'state': states.join(','),
       if (cities != null && cities.isNotEmpty) 'cities': cities.join(','),
@@ -264,7 +265,7 @@ class CollegeServices {
   }
   static Future<Map<String, dynamic>> getScholarshipsByCollege(String collegeId) async {
     final response = await http.get(
-      Uri.parse('https://tc-ca-server.onrender.com/api/scholarships/$collegeId'), // Modify with your API URL
+      Uri.parse('${_baseUrl}scholarships/$collegeId'), // Modify with your API URL
     );
 
     if (response.statusCode == 200) {

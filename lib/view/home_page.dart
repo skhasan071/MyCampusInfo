@@ -10,13 +10,12 @@ import 'package:my_campus_info/view/predicted_college.dart';
 import 'package:my_campus_info/view/profiles/profile_page.dart';
 import 'package:my_campus_info/view/Filters&Compare/searchPage.dart';
 import 'package:my_campus_info/view/Filters&Compare/shortlistCollegePage.dart';
+import 'package:my_campus_info/view_model/network_controller.dart';
 import 'package:my_campus_info/view_model/themeController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../internetCheck/connectivityChecker.dart';
 import '../view_model/controller.dart';
 import '../view_model/profile_controller.dart';
-import 'Setting&Support/notification_page.dart';
 
 class HomePage extends StatefulWidget {
   final String token;
@@ -30,6 +29,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   var controller = Get.put(Controller());
   var profileController = Get.put(ProfileController());
+  var networkController = Get.find<NetworkController>();
   bool isSnackBarActive = false;
   bool isSnackBarActionClicked = false;
 
@@ -171,21 +171,38 @@ class _HomePageState extends State<HomePage> {
             return false;
           }
         },
-        child: ConnectivityChecker(  // Wrap the entire Scaffold inside ConnectivityChecker
-          child: Scaffold(
-            key: scaffoldKey,
-            backgroundColor: Colors.white,
-            appBar: getAppBar(),
-            body: Obx(
-                  () =>
-              controller.isLoggedIn.value || controller.isGuestIn.value
-                  ? screens[controller.navSelectedIndex.value]
-                  : Center(child: CircularProgressIndicator(color: Colors.black,)),
-            ),
-            drawer: DrawerWidget(scaffoldKey, shortlistedCollegesCount),
-            bottomNavigationBar: getBottomNavBar(),  // Ensure this is outside any conditional check
-          ),
-        ),
+        child: Scaffold(
+          key: scaffoldKey,
+          backgroundColor: Colors.white,
+          appBar: getAppBar(),
+          body: Obx(() {
+            if(!networkController.isConnected.value){
+              return Center(child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text('No Internet Connection',
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.black,
+                    ), textAlign:  TextAlign.center,
+                  ),
+                  SizedBox(height: 10,),
+                  ElevatedButton(onPressed: (){}, style: ElevatedButton.styleFrom(
+                    backgroundColor: theme.brochureBtnColor,
+                  ), child: Text('Refresh', style: TextStyle(color: Colors.white,),))
+              ],
+            ),);}
+
+            if(!controller.isLoggedIn.value && !controller.isGuestIn.value){
+              return Center(child: CircularProgressIndicator(color: Colors.black,),);
+            }
+
+            return screens[controller.navSelectedIndex.value];
+
+          }),
+          drawer: DrawerWidget(scaffoldKey, shortlistedCollegesCount),
+          bottomNavigationBar: getBottomNavBar(),  // Ensure this is outside any conditional check
+        )
       );
     });
   }

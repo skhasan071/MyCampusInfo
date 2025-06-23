@@ -1,5 +1,4 @@
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:my_campus_info/view/SignUpLogin/mobilenoauth.dart';
 import 'package:my_campus_info/view/home_page.dart';
 import 'package:my_campus_info/view/profiles/complete_profile_page.dart';
 import 'package:my_campus_info/view_model/controller.dart';
@@ -9,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../internetCheck/connectivityChecker.dart';
 import '../../services/auth_services.dart';
 import 'login.dart';
 
@@ -26,6 +24,7 @@ class _SignupPageState extends State<SignupPage> {
   final TextEditingController passwordController = TextEditingController();
   bool isPasswordVisible = false;
   var profile = Get.put(ProfileController());
+  final controller = Get.put(Controller());
   var loader = Get.put(Loader());
   bool isPasswordValid(String password) {
     final regex = RegExp(r'^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#\$%^&*])[A-Za-z\d!@#\$%^&*]{8,}$');
@@ -133,6 +132,8 @@ class _SignupPageState extends State<SignupPage> {
       if (msgs['success']) {
         profile.profile.value = msgs['student'];
         profile.userToken.value = msgs['token'];
+        controller.isGuestIn.value = false; // user is logged in now
+        controller.isLoggedIn.value = true;
         saveToken(msgs['token']);
         loader.isLoading(false);
         return true;
@@ -166,244 +167,243 @@ class _SignupPageState extends State<SignupPage> {
 
   @override
   Widget build(BuildContext context) {
-    return ConnectivityChecker(  // Wrap the content with ConnectivityChecker
-      child:Scaffold(
-      backgroundColor: Colors.white,
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Center(
-              child: RichText(
-                text: TextSpan(
-                  text: "Sign Up",
-                  style: const TextStyle(
-                    fontSize: 32,
+    return Scaffold(
+    backgroundColor: Colors.white,
+    body: Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Center(
+            child: RichText(
+              text: TextSpan(
+                text: "Sign Up",
+                style: const TextStyle(
+                  fontSize: 32,
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ),
+
+          const SizedBox(height: 10),
+          Center(
+            child: RichText(
+              text: TextSpan(
+                text: "Sign Up here to continue to app",
+                style: const TextStyle(
+                  fontSize: 20,
+                  color: Colors.black,
+                  fontWeight: FontWeight.w100,
+                ),
+              ),
+            ),
+          ),
+
+          const SizedBox(height: 50),
+          const Text(
+            "Name*",
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          TextField(
+            controller: fullNameController,
+            keyboardType: TextInputType.name,
+            cursorColor: Colors.black,
+            decoration: InputDecoration(
+              hintText: "Enter your name",
+              border: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.black),
+                borderRadius: BorderRadius.circular(2),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.black, width: 2),
+              ),
+            ),
+          ),
+          const SizedBox(height: 15),
+          const Text(
+            "Email*",
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          TextField(
+            controller: emailController,
+            keyboardType: TextInputType.emailAddress,
+
+            cursorColor: Colors.black,
+            decoration: InputDecoration(
+              hintText: "Enter your email",
+              border: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.black),
+                borderRadius: BorderRadius.circular(2),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.black, width: 2),
+              ),
+            ),
+          ),
+          const SizedBox(height: 15),
+          const Text(
+            "Password*",
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          TextField(
+            controller: passwordController,
+            obscureText: !isPasswordVisible,
+            cursorColor: Colors.black,
+            decoration: InputDecoration(
+              hintText: "Enter your password",
+              suffixIcon: IconButton(
+                icon: Icon(
+                  isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                ),
+                onPressed: () {
+                  setState(() {
+                    isPasswordVisible = !isPasswordVisible;
+                  });
+                },
+              ),
+              border: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.black),
+                borderRadius: BorderRadius.circular(2),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.black, width: 2),
+              ),
+            ),
+          ),
+          const SizedBox(height: 25),
+          Obx(
+            () =>
+                !loader.isLoading.value
+                    ? SizedBox(
+                      width: double.infinity,
+                      height: 50,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.black,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(2),
+                          ),
+                        ),
+                        onPressed: () async {
+                          bool isSigned = await _handleSignUp();
+
+                          if (isSigned) {
+                            Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => CompleteProfilePage(),
+                              ),
+                              (route) => false,
+                            );
+                          }
+                        },
+                        child: const Text(
+                          "Sign Up",
+                          style: TextStyle(color: Colors.white, fontSize: 18),
+                        ),
+                      ),
+                    )
+                    : Center(
+                      child: CircularProgressIndicator(color: Colors.black),
+                    ),
+          ),
+          const SizedBox(height: 20),
+          // SizedBox(
+          //   width: double.infinity,
+          //   height: 50,
+          //   child: ElevatedButton.icon(
+          //     style: ElevatedButton.styleFrom(
+          //       backgroundColor: Colors.white,
+          //       shape: RoundedRectangleBorder(
+          //         borderRadius: BorderRadius.circular(2),
+          //         side: const BorderSide(color: Colors.black),
+          //       ),
+          //       elevation: 2,
+          //     ),
+          //     onPressed: () async {
+          //       Navigator.push(
+          //         context,
+          //         MaterialPageRoute(builder: (context) => Mobilenoauth()),
+          //       );
+          //     },
+          //     icon: Icon(Icons.phone, color: Colors.black, size: 24,),
+          //     label: Flexible(
+          //       child: Text(
+          //         'Sign Up with Mobile Number',
+          //         overflow: TextOverflow.ellipsis,
+          //         softWrap: false,
+          //         style: TextStyle(
+          //           color: Colors.black,
+          //           fontWeight: FontWeight.bold,
+          //         ),
+          //       ),
+          //     ),
+          //   ),
+          // ),
+          // const SizedBox(height: 20),
+          SizedBox(
+            width: double.infinity,
+            height: 50,
+            child: ElevatedButton.icon(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(2),
+                  side: const BorderSide(color: Colors.black),
+                ),
+                elevation: 2,
+              ),
+              onPressed: () {
+                _handleGoogleLogIn();
+              },
+              icon: Icon(Icons.email_outlined, color: Colors.black, size: 28,),
+              label: Flexible(
+                child: Text(
+                  "Sign Up with Gmail",
+                  style: TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
             ),
-
-            const SizedBox(height: 10),
-            Center(
-              child: RichText(
-                text: TextSpan(
-                  text: "SignUp here to continue to app",
-                  style: const TextStyle(
-                    fontSize: 20,
-                    color: Colors.black,
-                    fontWeight: FontWeight.w100,
-                  ),
-                ),
-              ),
-            ),
-
-            const SizedBox(height: 50),
-            const Text(
-              "Name*",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            TextField(
-              controller: fullNameController,
-              keyboardType: TextInputType.name,
-              cursorColor: Colors.black,
-              decoration: InputDecoration(
-                hintText: "Enter your name",
-                border: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.black),
-                  borderRadius: BorderRadius.circular(2),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.black, width: 2),
-                ),
-              ),
-            ),
-            const SizedBox(height: 15),
-            const Text(
-              "Email*",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            TextField(
-              controller: emailController,
-              keyboardType: TextInputType.emailAddress,
-              
-              cursorColor: Colors.black,
-              decoration: InputDecoration(
-                hintText: "Enter your email",
-                border: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.black),
-                  borderRadius: BorderRadius.circular(2),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.black, width: 2),
-                ),
-              ),
-            ),
-            const SizedBox(height: 15),
-            const Text(
-              "Password*",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            TextField(
-              controller: passwordController,
-              obscureText: !isPasswordVisible,
-              cursorColor: Colors.black,
-              decoration: InputDecoration(
-                hintText: "Enter your password",
-                suffixIcon: IconButton(
-                  icon: Icon(
-                    isPasswordVisible ? Icons.visibility : Icons.visibility_off,
-                  ),
-                  onPressed: () {
-                    setState(() {
-                      isPasswordVisible = !isPasswordVisible;
-                    });
-                  },
-                ),
-                border: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.black),
-                  borderRadius: BorderRadius.circular(2),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.black, width: 2),
-                ),
-              ),
-            ),
-            const SizedBox(height: 25),
-            Obx(
-              () =>
-                  !loader.isLoading.value
-                      ? SizedBox(
-                        width: double.infinity,
-                        height: 50,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.black,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(2),
-                            ),
-                          ),
-                          onPressed: () async {
-                            bool isSigned = await _handleSignUp();
-
-                            if (isSigned) {
-                              Navigator.pushAndRemoveUntil(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => CompleteProfilePage(),
-                                ),
-                                (route) => false,
-                              );
-                            }
-                          },
-                          child: const Text(
-                            "Sign Up",
-                            style: TextStyle(color: Colors.white, fontSize: 18),
-                          ),
-                        ),
-                      )
-                      : Center(
-                        child: CircularProgressIndicator(color: Colors.black),
-                      ),
-            ),
-            const SizedBox(height: 20),
-            // SizedBox(
-            //   width: double.infinity,
-            //   height: 50,
-            //   child: ElevatedButton.icon(
-            //     style: ElevatedButton.styleFrom(
-            //       backgroundColor: Colors.white,
-            //       shape: RoundedRectangleBorder(
-            //         borderRadius: BorderRadius.circular(2),
-            //         side: const BorderSide(color: Colors.black),
-            //       ),
-            //       elevation: 2,
-            //     ),
-            //     onPressed: () async {
-            //       Navigator.push(
-            //         context,
-            //         MaterialPageRoute(builder: (context) => Mobilenoauth()),
-            //       );
-            //     },
-            //     icon: Icon(Icons.phone, color: Colors.black, size: 24,),
-            //     label: Flexible(
-            //       child: Text(
-            //         'Sign Up with Mobile Number',
-            //         overflow: TextOverflow.ellipsis,
-            //         softWrap: false,
-            //         style: TextStyle(
-            //           color: Colors.black,
-            //           fontWeight: FontWeight.bold,
-            //         ),
-            //       ),
-            //     ),
-            //   ),
-            // ),
-            // const SizedBox(height: 20),
-            SizedBox(
-              width: double.infinity,
-              height: 50,
-              child: ElevatedButton.icon(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(2),
-                    side: const BorderSide(color: Colors.black),
-                  ),
-                  elevation: 2,
-                ),
-                onPressed: () {
-                  _handleGoogleLogIn();
-                },
-                icon: Icon(Icons.email_outlined, color: Colors.black, size: 28,),
-                label: Flexible(
-                  child: Text(
-                    "Sign Up with Gmail",
-                    style: TextStyle(
-                      color: Colors.black,
+          ),
+          const SizedBox(height: 20),
+          Center(
+            child: RichText(
+              text: TextSpan(
+                text: "Already have an account? ",
+                style: const TextStyle(fontSize: 16, color: Colors.black),
+                children: [
+                  TextSpan(
+                    text: "Login",
+                    style: const TextStyle(
+                      fontSize: 16,
+                      color: Colors.blue,
                       fontWeight: FontWeight.bold,
                     ),
+                    recognizer:
+                        TapGestureRecognizer()
+                          ..onTap = () {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const LoginPage(),
+                              ),
+                            );
+                          },
                   ),
-                ),
+                ],
               ),
             ),
-            const SizedBox(height: 20),
-            Center(
-              child: RichText(
-                text: TextSpan(
-                  text: "Already have an account? ",
-                  style: const TextStyle(fontSize: 16, color: Colors.black),
-                  children: [
-                    TextSpan(
-                      text: "Login",
-                      style: const TextStyle(
-                        fontSize: 16,
-                        color: Colors.blue,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      recognizer:
-                          TapGestureRecognizer()
-                            ..onTap = () {
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const LoginPage(),
-                                ),
-                              );
-                            },
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
-      ) );
+    ),
+    );
   }
 
   // Function to save the token

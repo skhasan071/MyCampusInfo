@@ -68,7 +68,7 @@ class _AdminBlogEntryPageState extends State<AdminBlogEntryPage> {
       };
 
       final response = await http.post(
-        Uri.parse('https://tc-ca-server.onrender.com/api/colleges/add/Blogs'),  // Replace with your backend URL
+        Uri.parse('http://3.7.169.233:8080/api2/colleges/add/Blogs'),  // Replace with your backend URL
         headers: {'Content-Type': 'application/json'},
         body: json.encode(blogData),
       );

@@ -50,7 +50,7 @@ class _QAPageState extends State<QAPage> {
 
   Future<void> fetchQuestions() async {
     final url = Uri.parse(
-      'https://tc-ca-server.onrender.com/api/colleges/questions/${widget.collegeId}',
+      'http://3.7.169.233:8080/api2/colleges/questions/${widget.collegeId}',
     );
 
     try {
@@ -260,7 +260,7 @@ class _AskQuestionPageState extends State<AskQuestionPage> {
 
     try {
       final url = Uri.parse(
-        'https://tc-ca-server.onrender.com/api/add-question',
+        'http://3.7.169.233:8080/api2/add-question',
       );
       final response = await http.post(
         url,

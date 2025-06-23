@@ -50,13 +50,13 @@ class _CompareCollegesState extends State<CompareColleges> {
     try {
       final response1 = await http.get(
         Uri.parse(
-          'https://tc-ca-server.onrender.com/api/colleges/placement/${widget.firstCollege.id}',
+          'http://3.7.169.233:8080/api2/colleges/placement/${widget.firstCollege.id}',
         ),
       );
 
       final response2 = await http.get(
         Uri.parse(
-          'https://tc-ca-server.onrender.com/api/colleges/placement/${widget.secondCollege.id}',
+          'http://3.7.169.233:8080/api2/colleges/placement/${widget.secondCollege.id}',
         ),
       );
 
@@ -156,8 +156,8 @@ class _CompareCollegesState extends State<CompareColleges> {
                 widget.secondCollege.feeRange,
               ]),
               _infoRow('NIRF Ranking', [
-                widget.firstCollege.ranking.toString(),
-                widget.secondCollege.ranking.toString(),
+                widget.firstCollege.ranking == 0 ? "N/A" : widget.firstCollege.ranking.toString(),
+                widget.secondCollege.ranking == 0 ? "N/A" : widget.secondCollege.ranking.toString(),
               ]),
               _infoRow('Placement Rate', [
                 placement1?.placementRate ?? 'Loading...',
@@ -185,7 +185,6 @@ class _CompareCollegesState extends State<CompareColleges> {
     return Column(
       children: [
         Container(
-          height: 170,
           decoration: BoxDecoration(color: Colors.grey[300]),
           child:
               imageUrl.isNotEmpty
@@ -202,15 +201,12 @@ class _CompareCollegesState extends State<CompareColleges> {
                   : const Center(child: Icon(Icons.image, size: 40)),
         ),
         const SizedBox(height: 6),
-        SizedBox(
-          height: 70,
-          child: Text(
-            name,
-            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-            textAlign: TextAlign.center,
-            maxLines: 3,
-            overflow: TextOverflow.ellipsis,
-          ),
+        Text(
+          name,
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          textAlign: TextAlign.center,
+          maxLines: 3,
+          overflow: TextOverflow.ellipsis,
         ),
       ],
     );

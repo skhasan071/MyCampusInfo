@@ -23,7 +23,7 @@ class _AdmissionState extends State<Admission> {
     try {
       final response = await http.get(
         Uri.parse(
-          'https://tc-ca-server.onrender.com/api/colleges/admission/${widget.collegeId}',
+          'http://3.7.169.233:8080/api2/colleges/admission/${widget.collegeId}',
         ),
       );
 

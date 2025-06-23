@@ -28,6 +28,7 @@ class ThemeController extends GetxController {
   void changeTheme(int index) {
     selectedThemeIndex.value = index;
     _saveThemeToPrefs(index);
+    update();
   }
 
   Future<void> _saveThemeToPrefs(int value) async {

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../internetCheck/connectivityChecker.dart';
 import '../../services/otp_service.dart';
 import 'otpscreen.dart';
 
@@ -53,92 +52,91 @@ class _MobilenoauthState extends State<Mobilenoauth> {
 
   @override
   Widget build(BuildContext context) {
-    return ConnectivityChecker(  // Wrap the content with ConnectivityChecker
-      child:Scaffold(
-      backgroundColor: Colors.white,
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset('assets/otp_image.png', height: 150),
-              SizedBox(height: 20),
-              Column(
+    return Scaffold(
+    backgroundColor: Colors.white,
+    body: Center(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 24.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset('assets/otp_image.png', height: 150),
+            SizedBox(height: 20),
+            Column(
+              children: [
+                Text(
+                  "Login with a Mobile Number",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 10),
+                Text(
+                  "Enter your mobile number. We will send you an OTP to verify.",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 16, color: Colors.grey),
+                ),
+              ],
+            ),
+
+            SizedBox(height: 20),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 12),
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.grey),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Row(
                 children: [
                   Text(
-                    "Login with a Mobile Number",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                    "+91",
+
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                  SizedBox(height: 10),
-                  Text(
-                    "Enter your mobile number. We will send you an OTP to verify.",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 16, color: Colors.grey),
+                  SizedBox(width: 10),
+                  Expanded(
+                    child: TextField(
+                      controller: phoneController,
+                      keyboardType: TextInputType.number,
+                      maxLength: 10,
+                      cursorColor: Colors.black,
+                      decoration: InputDecoration(
+                        counterText: "",
+                        border: InputBorder.none,
+                        hintText: "Enter mobile number",
+                      ),
+                    ),
                   ),
                 ],
               ),
-
-              SizedBox(height: 20),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 12),
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Row(
-                  children: [
-                    Text(
-                      "+91",
-
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    SizedBox(width: 10),
-                    Expanded(
-                      child: TextField(
-                        controller: phoneController,
-                        keyboardType: TextInputType.number,
-                        maxLength: 10,
-                        cursorColor: Colors.black,
-                        decoration: InputDecoration(
-                          counterText: "",
-                          border: InputBorder.none,
-                          hintText: "Enter mobile number",
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 30),
-              SizedBox(
-                width: double.infinity,
-                height: 50,
-                child: ElevatedButton(
-                  onPressed: isLoading ? null : handleContinue,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.black,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
+            ),
+            SizedBox(height: 30),
+            SizedBox(
+              width: double.infinity,
+              height: 50,
+              child: ElevatedButton(
+                onPressed: isLoading ? null : handleContinue,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.black,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
                   ),
-                  child:
-                      isLoading
-                          ? CircularProgressIndicator(color: Colors.white)
-                          : Text(
-                            "Continue",
-                            style: TextStyle(fontSize: 18, color: Colors.white),
-                          ),
                 ),
+                child:
+                    isLoading
+                        ? CircularProgressIndicator(color: Colors.white)
+                        : Text(
+                          "Continue",
+                          style: TextStyle(fontSize: 18, color: Colors.white),
+                        ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
-      ) );
+    ),
+    );
   }
 }
