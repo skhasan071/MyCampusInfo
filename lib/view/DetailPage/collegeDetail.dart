@@ -56,7 +56,7 @@ class _CollegeDetailState extends State<CollegeDetail> {
   var controller = Get.put(Controller());
   bool isSnackBarActive = false;
   bool isSnackBarActionClicked = false;
-
+  late ScrollController tabBarScrollController;
   Future<void> _loadPrefs() async {
     prefs = await SharedPreferences.getInstance();
     setState(() {
@@ -76,6 +76,13 @@ class _CollegeDetailState extends State<CollegeDetail> {
     super.initState();
     fetchPlacementData();
     _loadPrefs();
+    tabBarScrollController = ScrollController();
+  }
+
+  @override
+  void dispose() {
+    tabBarScrollController.dispose();
+    super.dispose();
   }
 
   Future<void> fetchPlacementData() async {
@@ -215,8 +222,7 @@ class _CollegeDetailState extends State<CollegeDetail> {
                                       ),
                                     ),
                                     duration: Duration(seconds: 3),
-                                    backgroundColor:
-                                        theme.filterSelectedColor,
+                                    backgroundColor: theme.filterSelectedColor,
                                     behavior: SnackBarBehavior.floating,
                                     action: SnackBarAction(
                                       label: 'Login',
@@ -228,8 +234,7 @@ class _CollegeDetailState extends State<CollegeDetail> {
                                           Navigator.pushReplacement(
                                             context,
                                             MaterialPageRoute(
-                                              builder:
-                                                  (context) => LoginPage(),
+                                              builder: (context) => LoginPage(),
                                             ),
                                           );
                                         }
@@ -307,134 +312,141 @@ class _CollegeDetailState extends State<CollegeDetail> {
                         bottom: BorderSide(color: Colors.grey, width: 0.4),
                       ),
                     ),
-                    child: TabBar(
-                      isScrollable: true,
-                      controller: tabController.tabController,
-                      labelColor: Colors.white,
-                      tabAlignment: TabAlignment.start,
-                      unselectedLabelColor: Colors.black,
-                      labelStyle: const TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 17,
-                      ),
-                      unselectedLabelStyle: const TextStyle(
-                        fontWeight: FontWeight.normal,
-                      ),
-                      indicator: BoxDecoration(
-                        color: theme.filterSelectedColor,
-                        borderRadius: BorderRadius.circular(6),
-                      ),
-                      onTap: (index) {
-                        final selectedTab = tabController.tabs[index];
-                        if (selectedTab != "Overview") {
-                          switch (selectedTab) {
-                            case "Courses":
-                              Get.to(
-                                () => Courses(
-                                  widget.college.id,
-                                  collegeImage: widget.college.image,
-                                  collegeName: widget.college.name,
-                                ),
-                              );
-                              break;
-                            case "Scholarship & Aid":
-                              Get.to(
-                                () => Scholarships(
-                                  collegeId: widget.college.id,
-                                  collegeName:
-                                      widget
-                                          .college
-                                          .name, // Pass the college name here as well
-                                ),
-                              );
-                              break;
-                            case "Reviews":
-                              Get.to(() => Reviews(widget.college.id));
-                              break;
-                            case "Placements":
-                              Get.to(
-                                () => PlacementDetails(
-                                  collegeId: widget.college.id,
-                                ),
-                              );
-                              break;
-                            case "Admission & Eligibility":
-                              Get.to(
-                                () => Admission(collegeId: widget.college.id),
-                              );
-                              break;
-                            case "Cost & Location":
-                              Get.to(
-                                () => Cost(
-                                  collegeId: widget.college.id,
-                                  collegeName: widget.college.name,
-                                  collegeImage: widget.college.image,
-                                ),
-                              );
-                              break;
-
-                            case "Distance from Hometown":
-                              if (widget.lat != null && widget.long != null) {
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      controller: tabBarScrollController,
+                      child: TabBar(
+                        isScrollable: true,
+                        controller: tabController.tabController,
+                        labelColor: Colors.white,
+                        tabAlignment: TabAlignment.start,
+                        unselectedLabelColor: Colors.black,
+                        labelStyle: const TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 17,
+                        ),
+                        unselectedLabelStyle: const TextStyle(
+                          fontWeight: FontWeight.normal,
+                        ),
+                        indicator: BoxDecoration(
+                          color: theme.filterSelectedColor,
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                        onTap: (index) {
+                          final selectedTab = tabController.tabs[index];
+                          if (selectedTab != "Overview") {
+                            double savedScrollOffset =
+                                tabBarScrollController.offset;
+                            switch (selectedTab) {
+                              case "Courses":
                                 Get.to(
-                                  () => DistanceFromHometown(
+                                  () => Courses(
+                                    widget.college.id,
+                                    collegeImage: widget.college.image,
+                                    collegeName: widget.college.name,
+                                  ),
+                                );
+                                break;
+                              case "Scholarship & Aid":
+                                Get.to(
+                                  () => Scholarships(
                                     collegeId: widget.college.id,
-                                    lat: widget.lat,
-                                    long: widget.long,
+                                    collegeName:
+                                        widget
+                                            .college
+                                            .name, // Pass the college name here as well
                                   ),
                                 );
-                              } else {
-                                Get.snackbar(
-                                  'Error',
-                                  'Location data is missing.',
+                                break;
+                              case "Reviews":
+                                Get.to(() => Reviews(widget.college.id));
+                                break;
+                              case "Placements":
+                                Get.to(
+                                  () => PlacementDetails(
+                                    collegeId: widget.college.id,
+                                  ),
                                 );
-                              }
-                              break;
-                            case "Latest News & Insights":
-                              Get.to(() => Insights());
-                              break;
-                            case "Q & A":
-                              Get.to(
-                                () => QAPage(
-                                  collegeId: widget.college.id,
-                                  collegeName: widget.college.name,
-                                ),
-                              );
-                              break;
-                            case "Hostel & Campus Life":
-                              Get.to(
-                                () => Hostel(collegeId: widget.college.id),
-                              );
-                              break;
-                            case "Cut-offs & Ranking":
-                              Get.to(
-                                () => Cutoff(
-                                  collegeId: widget.college.id,
-                                  collegeName: widget.college.name,
-                                  collegeImage: widget.college.image,
-                                ),
-                              );
-                              break;
-                          }
+                                break;
+                              case "Admission & Eligibility":
+                                Get.to(
+                                  () => Admission(collegeId: widget.college.id),
+                                );
+                                break;
+                              case "Cost & Location":
+                                Get.to(
+                                  () => Cost(
+                                    collegeId: widget.college.id,
+                                    collegeName: widget.college.name,
+                                    collegeImage: widget.college.image,
+                                  ),
+                                );
+                                break;
 
-                          Future.delayed(const Duration(milliseconds: 100), () {
-                            tabController.tabController.index = 0;
-                          });
-                        }
-                      },
-                      tabs:
-                          tabController.tabs
-                              .map(
-                                (tab) => Tab(
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                      vertical: 8.0,
-                                      horizontal: 12,
+                              case "Distance from Hometown":
+                                if (widget.lat != null && widget.long != null) {
+                                  Get.to(
+                                    () => DistanceFromHometown(
+                                      collegeId: widget.college.id,
+                                      lat: widget.lat,
+                                      long: widget.long,
                                     ),
-                                    child: Text(tab),
+                                  );
+                                } else {
+                                  Get.snackbar(
+                                    'Error',
+                                    'Location data is missing.',
+                                  );
+                                }
+                                break;
+                              case "Latest News & Insights":
+                                Get.to(() => Insights());
+                                break;
+                              case "Q & A":
+                                Get.to(
+                                  () => QAPage(
+                                    collegeId: widget.college.id,
+                                    collegeName: widget.college.name,
                                   ),
-                                ),
-                              )
-                              .toList(),
+                                );
+                                break;
+                              case "Hostel & Campus Life":
+                                Get.to(
+                                  () => Hostel(collegeId: widget.college.id),
+                                );
+                                break;
+                              case "Cut-offs & Ranking":
+                                Get.to(
+                                  () => Cutoff(
+                                    collegeId: widget.college.id,
+                                    collegeName: widget.college.name,
+                                    collegeImage: widget.college.image,
+                                  ),
+                                );
+                                break;
+                            }
+
+                            tabController.tabController.index = 0;
+                            WidgetsBinding.instance.addPostFrameCallback((_) {
+                              tabBarScrollController.jumpTo(savedScrollOffset);
+                            });
+                          }
+                        },
+                        tabs:
+                            tabController.tabs
+                                .map(
+                                  (tab) => Tab(
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                        vertical: 8.0,
+                                        horizontal: 12,
+                                      ),
+                                      child: Text(tab),
+                                    ),
+                                  ),
+                                )
+                                .toList(),
+                      ),
                     ),
                   ),
                   SafeArea(
