@@ -1,9 +1,10 @@
-import 'package:my_campus_info/model/cost.dart';
-import 'package:my_campus_info/view_model/themeController.dart';
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
-import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:my_campus_info/model/cost.dart';
+import 'package:my_campus_info/view_model/themeController.dart';
 
 class Cost extends StatelessWidget {
   final String collegeId;
@@ -20,7 +21,9 @@ class Cost extends StatelessWidget {
   Future<CostModel?> fetchCostData(String collegeId) async {
     try {
       final response = await http.get(
-        Uri.parse("http://3.7.169.233:8080/api2/colleges/cost/$collegeId"),
+        Uri.parse(
+          "https://tc-ca-server.onrender.com/api2/colleges/cost/$collegeId",
+        ),
       );
 
       if (response.statusCode == 200) {
@@ -67,7 +70,9 @@ class Cost extends StatelessWidget {
                 ),
               );
             } else if (snapshot.hasError || snapshot.data == null) {
-              return const Center(child: Text("Cannot fetch data please retry."));
+              return const Center(
+                child: Text("Cannot fetch data please retry."),
+              );
             }
 
             final cost = snapshot.data!;
@@ -300,7 +305,6 @@ class Cost extends StatelessWidget {
                   style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
-
                   ),
                 ),
                 Text(

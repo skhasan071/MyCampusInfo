@@ -1,6 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 class AdminBlogEntryPage extends StatefulWidget {
   const AdminBlogEntryPage({super.key});
@@ -19,8 +20,10 @@ class _AdminBlogEntryPageState extends State<AdminBlogEntryPage> {
   final TextEditingController readingTimeController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
   final TextEditingController contentController = TextEditingController();
-  final TextEditingController contributorNameController = TextEditingController();
-  final TextEditingController contributorTitleController = TextEditingController();
+  final TextEditingController contributorNameController =
+      TextEditingController();
+  final TextEditingController contributorTitleController =
+      TextEditingController();
   String contentType = 'regular';
   // 'regular', 'bold', or 'scrollable'
   @override
@@ -34,6 +37,7 @@ class _AdminBlogEntryPageState extends State<AdminBlogEntryPage> {
     contributorTitleController.dispose();
     super.dispose();
   }
+
   void addContentSection() {
     setState(() {
       contentSections.add({
@@ -41,7 +45,7 @@ class _AdminBlogEntryPageState extends State<AdminBlogEntryPage> {
         'content': contentController.text,
       });
     });
-    contentController.clear();  // Clear the text input after adding
+    contentController.clear(); // Clear the text input after adding
   }
 
   void addContributor() {
@@ -52,7 +56,8 @@ class _AdminBlogEntryPageState extends State<AdminBlogEntryPage> {
       });
     });
     contributorNameController.clear();
-    contributorTitleController.clear();  // Clear the text inputs for contributors
+    contributorTitleController
+        .clear(); // Clear the text inputs for contributors
   }
 
   // Function to submit the blog data to the backend
@@ -63,20 +68,27 @@ class _AdminBlogEntryPageState extends State<AdminBlogEntryPage> {
         'category': categoryController.text,
         'readingTime': readingTimeController.text,
         'description': descriptionController.text,
-        'content': contentSections,  // List of content sections (bold, scrollable, etc.)
-        'contributors': contributors,  // List of contributors
+        'content':
+            contentSections, // List of content sections (bold, scrollable, etc.)
+        'contributors': contributors, // List of contributors
       };
 
       final response = await http.post(
-        Uri.parse('http://3.7.169.233:8080/api2/colleges/add/Blogs'),  // Replace with your backend URL
+        Uri.parse(
+          'https://tc-ca-server.onrender.com/api2/colleges/add/Blogs',
+        ), // Replace with your backend URL
         headers: {'Content-Type': 'application/json'},
         body: json.encode(blogData),
       );
 
       if (response.statusCode == 201) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Blog added successfully')));
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Blog added successfully')));
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed to add blog')));
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Failed to add blog')));
       }
     }
   }
@@ -84,9 +96,7 @@ class _AdminBlogEntryPageState extends State<AdminBlogEntryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Add New Blog'),
-      ),
+      appBar: AppBar(title: Text('Add New Blog')),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -150,13 +160,17 @@ class _AdminBlogEntryPageState extends State<AdminBlogEntryPage> {
                       contentType = newValue!;
                     });
                   },
-                  items: <String>['regular', 'bold', 'scrollable']
-                      .map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
+                  items:
+                      <String>[
+                        'regular',
+                        'bold',
+                        'scrollable',
+                      ].map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
                 ),
 
                 // Content Text Input
@@ -189,7 +203,9 @@ class _AdminBlogEntryPageState extends State<AdminBlogEntryPage> {
                 ),
                 SizedBox(height: 8),
                 for (var section in contentSections)
-                  buildContentSection(section),  // Display each content section dynamically
+                  buildContentSection(
+                    section,
+                  ), // Display each content section dynamically
 
                 SizedBox(height: 20),
 
@@ -241,9 +257,7 @@ class _AdminBlogEntryPageState extends State<AdminBlogEntryPage> {
           style: TextStyle(fontWeight: FontWeight.bold),
         );
       case 'scrollable':
-        return SingleChildScrollView(
-          child: Text(section['content']!),
-        );
+        return SingleChildScrollView(child: Text(section['content']!));
       default:
         return Text(section['content']!);
     }
@@ -264,7 +278,10 @@ class _AdminBlogEntryPageState extends State<AdminBlogEntryPage> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(name, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+              Text(
+                name,
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
               Text(title, style: TextStyle(fontSize: 14, color: Colors.grey)),
             ],
           ),

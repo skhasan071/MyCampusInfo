@@ -1,5 +1,7 @@
 import 'dart:convert';
+
 import 'package:http/http.dart' as http;
+
 import '../model/Faculty.dart';
 import '../model/Hostel.dart';
 import '../model/admission_process.dart';
@@ -8,8 +10,8 @@ import '../model/college.dart';
 import '../model/course.dart';
 
 class CollegeServices {
-
-  static const String _baseUrl = 'http://3.7.169.233:8080/api2/colleges/';
+  static const String _baseUrl =
+      'https://tc-ca-server.onrender.com/api2/colleges/';
 
   /// Get all colleges
   static Future<List<College>> getColleges() async {
@@ -29,7 +31,12 @@ class CollegeServices {
     }
   }
 
-  Future<List<College>> searchColleges({required String searchText, List<String>? streams, List<String>? states, List<String>? cities,}) async {
+  Future<List<College>> searchColleges({
+    required String searchText,
+    List<String>? streams,
+    List<String>? states,
+    List<String>? cities,
+  }) async {
     final uri = Uri.http('3.7.169.233', '/api2/colleges/search', {
       'search': searchText,
 
@@ -54,13 +61,17 @@ class CollegeServices {
   }
 
   ///Get Filters
-  static Future<List<College>> filterColleges({required List<String> interestedStreams, List<String>? coursesInterested, String? type,}) async {
+  static Future<List<College>> filterColleges({
+    required List<String> interestedStreams,
+    List<String>? coursesInterested,
+    String? type,
+  }) async {
     final url = Uri.parse('${_baseUrl}filter');
 
     try {
       final response = await http.post(
         url,
-        headers: { 'Content-Type': 'application/json' },
+        headers: {'Content-Type': 'application/json'},
         body: jsonEncode({
           'interestedStreams': interestedStreams,
           'coursesInterested': coursesInterested,
@@ -75,17 +86,20 @@ class CollegeServices {
         return [];
       }
     } catch (e) {
-
       return [];
     }
   }
 
-  static Future<List<College>> filterCollegesByRanking({required String stream, String? ranking,}) async {
-    final uri = Uri.parse('${_baseUrl}colleges/filter-by-ranking')
-        .replace(queryParameters: {
-      'stream': stream,
-      if (ranking != null) 'ranking': ranking,
-    });
+  static Future<List<College>> filterCollegesByRanking({
+    required String stream,
+    String? ranking,
+  }) async {
+    final uri = Uri.parse('${_baseUrl}colleges/filter-by-ranking').replace(
+      queryParameters: {
+        'stream': stream,
+        if (ranking != null) 'ranking': ranking,
+      },
+    );
 
     try {
       final response = await http.get(uri);
@@ -101,7 +115,12 @@ class CollegeServices {
     }
   }
 
-  static Future<List<College>> fetchFilteredColleges({required List<String> streams, String? country, String? state, String? city,}) async {
+  static Future<List<College>> fetchFilteredColleges({
+    required List<String> streams,
+    String? country,
+    String? state,
+    String? city,
+  }) async {
     final baseUrl = Uri.parse('${_baseUrl}filter-by-stream');
 
     // Create query parameters
@@ -125,11 +144,9 @@ class CollegeServices {
       },
     );
 
-
     final response = await http.get(uri);
 
     if (response.statusCode == 200) {
-
       var json = jsonDecode(response.body);
 
       if (json is List) {
@@ -139,7 +156,6 @@ class CollegeServices {
       } else {
         return [];
       }
-
     } else {
       return [];
     }
@@ -263,13 +279,20 @@ class CollegeServices {
       return null;
     }
   }
-  static Future<Map<String, dynamic>> getScholarshipsByCollege(String collegeId) async {
+
+  static Future<Map<String, dynamic>> getScholarshipsByCollege(
+    String collegeId,
+  ) async {
     final response = await http.get(
-      Uri.parse('${_baseUrl}scholarships/$collegeId'), // Modify with your API URL
+      Uri.parse(
+        '${_baseUrl}scholarships/$collegeId',
+      ), // Modify with your API URL
     );
 
     if (response.statusCode == 200) {
-      return json.decode(response.body);  // Assuming response contains scholarships data
+      return json.decode(
+        response.body,
+      ); // Assuming response contains scholarships data
     } else {
       throw Exception('Failed to load scholarships');
     }

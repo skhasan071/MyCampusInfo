@@ -1,14 +1,14 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:my_campus_info/model/user.dart';
+
 import 'package:http/http.dart' as http;
+import 'package:my_campus_info/model/user.dart';
 
 import '../model/college.dart';
 import '../model/review.dart';
 
 class StudentService {
-  static const String _baseUrl =
-      'http://3.7.169.233/api2/students';
+  static const String _baseUrl = 'http://3.7.169.233/api2/students';
 
   Future<Student?> fetchStudentById(String id) async {
     final url = Uri.parse(
@@ -213,7 +213,7 @@ class StudentService {
 
   Future<Review?> postReview(Review review) async {
     final url = Uri.parse(
-      'http://3.7.169.233:8080/api2/colleges/reviews',
+      'https://tc-ca-server.onrender.com/api2/colleges/reviews',
     );
 
     try {
@@ -235,7 +235,7 @@ class StudentService {
 
   Future<List<Review>> getReviews(String uid) async {
     final url = Uri.parse(
-      'http://3.7.169.233:8080/api2/colleges/reviews/getAll/$uid',
+      'https://tc-ca-server.onrender.com/api2/colleges/reviews/getAll/$uid',
     );
 
     final response = await http.get(url);

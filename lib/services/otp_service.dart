@@ -1,6 +1,6 @@
 import 'dart:convert';
+
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -8,7 +8,7 @@ import '../model/user.dart';
 import '../view_model/profile_controller.dart';
 
 class OtpService {
-  final String baseUrl = 'http://3.7.169.233:8080/api2';
+  final String baseUrl = 'https://tc-ca-server.onrender.com/api2';
   final pfpController = Get.put(ProfileController());
 
   /// Send OTP to the given phone number
@@ -50,7 +50,10 @@ class OtpService {
         print(data['token']);
         saveToken(data['token']);
         pfpController.userToken.value = data['token'];
-        pfpController.profile.value = Student(id: data['data']['_id'], mobileNumber: phone);
+        pfpController.profile.value = Student(
+          id: data['data']['_id'],
+          mobileNumber: phone,
+        );
         return true;
       } else {
         return false;
@@ -64,5 +67,4 @@ class OtpService {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('auth_token', token);
   }
-
 }

@@ -1,8 +1,9 @@
-import 'package:my_campus_info/view_model/themeController.dart';
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
+import 'package:my_campus_info/view_model/themeController.dart';
 
 class Scholarships extends StatefulWidget {
   final String collegeId;
@@ -34,13 +35,17 @@ class _ScholarshipsState extends State<Scholarships> {
 
     if (result['status'] == 200) {
       setState(() {
-        scholarships = (result['data'] as List).map((scholarship) {
-          return {
-            'ScholarshipName': scholarship['ScholarshipName'] ?? 'No name provided',
-            'ScholarshipMoney': scholarship['ScholarshipMoney'] ?? 0,
-            'ScholarshipDescription': scholarship['ScholarshipDescription'] ?? 'No description provided',
-          };
-        }).toList();
+        scholarships =
+            (result['data'] as List).map((scholarship) {
+              return {
+                'ScholarshipName':
+                    scholarship['ScholarshipName'] ?? 'No name provided',
+                'ScholarshipMoney': scholarship['ScholarshipMoney'] ?? 0,
+                'ScholarshipDescription':
+                    scholarship['ScholarshipDescription'] ??
+                    'No description provided',
+              };
+            }).toList();
 
         averageFinancialAid = calculateAverageFinancialAid(scholarships);
         _isLoading = false;
@@ -54,8 +59,12 @@ class _ScholarshipsState extends State<Scholarships> {
     }
   }
 
-  Future<Map<String, dynamic>> fetchScholarshipByCollegeId(String collegeId) async {
-    final url = Uri.parse('http://3.7.169.233:8080/api2/colleges/scholarships/$collegeId');
+  Future<Map<String, dynamic>> fetchScholarshipByCollegeId(
+    String collegeId,
+  ) async {
+    final url = Uri.parse(
+      'https://tc-ca-server.onrender.com/api2/colleges/scholarships/$collegeId',
+    );
 
     try {
       final response = await http.get(url);
@@ -177,26 +186,28 @@ class _ScholarshipsState extends State<Scholarships> {
               const SizedBox(height: 12),
               _isLoading
                   ? Center(
-                child: CircularProgressIndicator(
-                  color: theme.filterSelectedColor,
-                ),
-              )
+                    child: CircularProgressIndicator(
+                      color: theme.filterSelectedColor,
+                    ),
+                  )
                   : scholarships.isNotEmpty
                   ? ListView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: scholarships.length,
-                itemBuilder: (context, index) {
-                  return _buildScholarshipTile(
-                    title: scholarships[index]['ScholarshipName'],
-                    subtitle: '\$${scholarships[index]['ScholarshipMoney']} per year',
-                    description: scholarships[index]['ScholarshipDescription'],
-                  );
-                },
-              )
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: scholarships.length,
+                    itemBuilder: (context, index) {
+                      return _buildScholarshipTile(
+                        title: scholarships[index]['ScholarshipName'],
+                        subtitle:
+                            '\$${scholarships[index]['ScholarshipMoney']} per year',
+                        description:
+                            scholarships[index]['ScholarshipDescription'],
+                      );
+                    },
+                  )
                   : const Center(
-                child: Text("No scholarships found for this college"),
-              ),
+                    child: Text("No scholarships found for this college"),
+                  ),
               const SizedBox(height: 16),
               Divider(color: Colors.grey, thickness: 0.5),
               const SizedBox(height: 16),

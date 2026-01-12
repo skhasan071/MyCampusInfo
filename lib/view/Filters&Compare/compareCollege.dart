@@ -1,10 +1,11 @@
 import 'dart:convert';
-import 'package:my_campus_info/model/placement.dart';
-import 'package:my_campus_info/view_model/themeController.dart';
+
 import 'package:flutter/material.dart';
-import 'package:my_campus_info/model/college.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:http/http.dart' as http;
+import 'package:my_campus_info/model/college.dart';
+import 'package:my_campus_info/model/placement.dart';
+import 'package:my_campus_info/view_model/themeController.dart';
 
 class CompareColleges extends StatefulWidget {
   final String collegeImage;
@@ -50,13 +51,13 @@ class _CompareCollegesState extends State<CompareColleges> {
     try {
       final response1 = await http.get(
         Uri.parse(
-          'http://3.7.169.233:8080/api2/colleges/placement/${widget.firstCollege.id}',
+          'https://tc-ca-server.onrender.com/api2/colleges/placement/${widget.firstCollege.id}',
         ),
       );
 
       final response2 = await http.get(
         Uri.parse(
-          'http://3.7.169.233:8080/api2/colleges/placement/${widget.secondCollege.id}',
+          'https://tc-ca-server.onrender.com/api2/colleges/placement/${widget.secondCollege.id}',
         ),
       );
 
@@ -156,8 +157,12 @@ class _CompareCollegesState extends State<CompareColleges> {
                 widget.secondCollege.feeRange,
               ]),
               _infoRow('NIRF Ranking', [
-                widget.firstCollege.ranking == 0 ? "N/A" : widget.firstCollege.ranking.toString(),
-                widget.secondCollege.ranking == 0 ? "N/A" : widget.secondCollege.ranking.toString(),
+                widget.firstCollege.ranking == 0
+                    ? "N/A"
+                    : widget.firstCollege.ranking.toString(),
+                widget.secondCollege.ranking == 0
+                    ? "N/A"
+                    : widget.secondCollege.ranking.toString(),
               ]),
               _infoRow('Placement Rate', [
                 placement1?.placementRate ?? 'Loading...',

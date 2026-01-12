@@ -1,9 +1,10 @@
-import 'package:my_campus_info/view_model/themeController.dart';
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
-import 'package:intl/intl.dart';
-import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
+import 'package:my_campus_info/view_model/themeController.dart';
 
 class QAPage extends StatefulWidget {
   final String collegeId;
@@ -50,7 +51,7 @@ class _QAPageState extends State<QAPage> {
 
   Future<void> fetchQuestions() async {
     final url = Uri.parse(
-      'http://3.7.169.233:8080/api2/colleges/questions/${widget.collegeId}',
+      'https://tc-ca-server.onrender.com/api2/colleges/questions/${widget.collegeId}',
     );
 
     try {
@@ -260,7 +261,7 @@ class _AskQuestionPageState extends State<AskQuestionPage> {
 
     try {
       final url = Uri.parse(
-        'http://3.7.169.233:8080/api2/add-question',
+        'https://tc-ca-server.onrender.com/api2/add-question',
       );
       final response = await http.post(
         url,

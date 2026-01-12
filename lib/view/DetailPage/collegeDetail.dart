@@ -1,25 +1,27 @@
 import 'dart:convert';
+
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
+import 'package:my_campus_info/view/DetailPage/Q&A.dart';
+import 'package:my_campus_info/view/DetailPage/admission.dart';
+import 'package:my_campus_info/view/DetailPage/cost.dart';
+import 'package:my_campus_info/view/DetailPage/courses.dart';
+import 'package:my_campus_info/view/DetailPage/cutoff.dart';
+import 'package:my_campus_info/view/DetailPage/distanceFromHome.dart';
+import 'package:my_campus_info/view/DetailPage/hostel.dart';
+import 'package:my_campus_info/view/DetailPage/insights.dart';
+import 'package:my_campus_info/view/DetailPage/placementDetails.dart';
+import 'package:my_campus_info/view/DetailPage/review.dart';
+import 'package:my_campus_info/view/DetailPage/scholarships.dart';
 import 'package:my_campus_info/view/Filters&Compare/compareWith.dart';
 import 'package:my_campus_info/view_model/controller.dart';
 import 'package:my_campus_info/view_model/profile_controller.dart';
-import 'package:my_campus_info/view_model/themeController.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:my_campus_info/view_model/tabController.dart';
 import 'package:my_campus_info/view_model/saveController.dart';
-import 'package:my_campus_info/view/DetailPage/courses.dart';
-import 'package:my_campus_info/view/DetailPage/review.dart';
-import 'package:my_campus_info/view/DetailPage/placementDetails.dart';
-import 'package:my_campus_info/view/DetailPage/admission.dart';
-import 'package:my_campus_info/view/DetailPage/cost.dart';
-import 'package:my_campus_info/view/DetailPage/scholarships.dart';
-import 'package:my_campus_info/view/DetailPage/distanceFromHome.dart';
-import 'package:my_campus_info/view/DetailPage/insights.dart';
-import 'package:my_campus_info/view/DetailPage/Q&A.dart';
-import 'package:my_campus_info/view/DetailPage/hostel.dart';
-import 'package:my_campus_info/view/DetailPage/cutoff.dart';
-import 'package:http/http.dart' as http;
+import 'package:my_campus_info/view_model/tabController.dart';
+import 'package:my_campus_info/view_model/themeController.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 import '../../model/Placement.dart';
 import '../../model/college.dart';
 import '../SignUpLogin/login.dart';
@@ -80,7 +82,7 @@ class _CollegeDetailState extends State<CollegeDetail> {
 
   Future<void> fetchPlacementData() async {
     final url =
-        'http://3.7.169.233:8080/api2/colleges/placement/${widget.college.id}';
+        'https://tc-ca-server.onrender.com/api2/colleges/placement/${widget.college.id}';
     final response = await http.get(Uri.parse(url));
 
     if (response.statusCode == 200) {
@@ -215,8 +217,7 @@ class _CollegeDetailState extends State<CollegeDetail> {
                                       ),
                                     ),
                                     duration: Duration(seconds: 3),
-                                    backgroundColor:
-                                        theme.filterSelectedColor,
+                                    backgroundColor: theme.filterSelectedColor,
                                     behavior: SnackBarBehavior.floating,
                                     action: SnackBarAction(
                                       label: 'Login',
@@ -228,8 +229,7 @@ class _CollegeDetailState extends State<CollegeDetail> {
                                           Navigator.pushReplacement(
                                             context,
                                             MaterialPageRoute(
-                                              builder:
-                                                  (context) => LoginPage(),
+                                              builder: (context) => LoginPage(),
                                             ),
                                           );
                                         }

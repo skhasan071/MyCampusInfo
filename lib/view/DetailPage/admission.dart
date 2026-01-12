@@ -1,8 +1,9 @@
 import 'dart:convert';
-import 'package:my_campus_info/view_model/themeController.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:http/http.dart' as http;
+import 'package:my_campus_info/view_model/themeController.dart';
 
 class Admission extends StatefulWidget {
   const Admission({super.key, required this.collegeId});
@@ -23,7 +24,7 @@ class _AdmissionState extends State<Admission> {
     try {
       final response = await http.get(
         Uri.parse(
-          'http://3.7.169.233:8080/api2/colleges/admission/${widget.collegeId}',
+          'https://tc-ca-server.onrender.com/api2/colleges/admission/${widget.collegeId}',
         ),
       );
 
@@ -65,7 +66,7 @@ class _AdmissionState extends State<Admission> {
           elevation: 0,
           title: const Text(
             'Admissions Details',
-            style: TextStyle(fontWeight: FontWeight.bold)
+            style: TextStyle(fontWeight: FontWeight.bold),
           ),
           centerTitle: true,
           leading: IconButton(
